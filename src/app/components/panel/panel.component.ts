@@ -6,7 +6,7 @@ import * as luckysheet from 'luckysheet';
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
-  styleUrls: ['./panel.component.sass']
+  styleUrls: ['./panel.component.scss']
 })
 export class PanelComponent implements OnInit, AfterViewInit {
 
