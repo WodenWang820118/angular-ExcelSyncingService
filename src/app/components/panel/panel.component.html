@@ -1,8 +1,8 @@
-<input
-  style="font-size:16px;"
-  type="file"
-  id="Luckyexcel-demo-file"
-  name="Luckyexcel-demo-file"
-  (change)="parseXLSX($event)"
->
-<div id="luckysheet"></div>
+<div class="panel">
+  <input
+    style="font-size:16px;"
+    type="file"
+    (change)="parseXLSX($event)"
+  >
+  <div id="luckysheet"></div>
+</div>

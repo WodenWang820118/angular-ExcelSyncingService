@@ -1,10 +1,15 @@
+.panel {
+  width:900px;
+  padding: 0% 20px;
+}
+
 #luckysheet {
   margin:0px;
   padding:0px;
   position: absolute;
-  width:100%;
+  width:900px;
   left: 0px;
   top: 50px;
-  bottom: 0px;
+  bottom: 100px;
   outline: none;
 }

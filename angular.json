@@ -31,6 +31,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss",
               "node_modules/luckysheet/dist/plugins/css/pluginsCss.css",
               "node_modules/luckysheet/dist/plugins/plugins.css",
@@ -105,6 +106,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
