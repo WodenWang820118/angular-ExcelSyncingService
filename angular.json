@@ -38,7 +38,7 @@
               "node_modules/luckysheet/dist/assets/iconfont/iconfont.css"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js"
+              
             ]
           },
           "configurations": {

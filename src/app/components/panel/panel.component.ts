@@ -19,6 +19,7 @@ export class PanelComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
   }
 
+  // reference: https://github.com/mengshukeji/Luckyexcel/blob/master/src/index.html
   parseXLSX(event: any) {
     const files = event.target.files;
 
