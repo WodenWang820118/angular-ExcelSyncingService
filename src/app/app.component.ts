@@ -1,10 +1,28 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
+import { WindowService } from './window.service';
+import * as luckysheet from 'luckysheet';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   title = 'angular-csv';
+
+  constructor(private windowService: WindowService) {}
+
+  ngOnInit(): void {
+  }
+
+  ngAfterViewInit() {
+    let nativeWindow = this.windowService.nativeWindow;
+    nativeWindow.$(function() {
+      // configuration item
+      var options = {
+        container: 'luckysheet' // luckysheet is the container id
+      }
+      luckysheet.create(options);
+    })
+  }
 }

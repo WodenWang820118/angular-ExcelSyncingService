@@ -31,9 +31,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles.sass",
+              "node_modules/luckysheet/dist/plugins/css/pluginsCss.css",
+              "node_modules/luckysheet/dist/plugins/plugins.css",
+              "node_modules/luckysheet/dist/css/luckysheet.css",
+              "node_modules/luckysheet/dist/assets/iconfont/iconfont.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js"
+            ]
           },
           "configurations": {
             "production": {

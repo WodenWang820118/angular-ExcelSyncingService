@@ -1,2 +1,21 @@
-<h1>Excel JS</h1>
-<input type="file" (change)="parseXLSX($event)">
+<input
+    style="font-size:16px;"
+    type="file"
+    id="Luckyexcel-demo-file"
+    name="Luckyexcel-demo-file"
+    (scroll)="$event.preventDefault()"
+    (change)="parseXLSX($event)"
+>
+<div
+    id="luckysheet"
+    style=" margin:0px;
+            padding:0px;
+            position:
+            absolute;
+            width:100%;
+            left: 0px;
+            top: 50px;
+            bottom: 0px;
+            outline: none;"
+        >
+</div>
