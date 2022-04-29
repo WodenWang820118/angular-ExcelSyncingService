@@ -61,7 +61,8 @@ export class SettingComponent implements OnInit {
     }
   }
 
-  verifyCell(cell: String): boolean {    
+  verifyCell(cell: String): boolean {
+    // TODO: should use regex for indentification
     if (this.isLetter(cell.toUpperCase())) {
       return true
     }
