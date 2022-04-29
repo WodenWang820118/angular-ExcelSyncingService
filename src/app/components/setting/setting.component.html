@@ -1,12 +1,26 @@
 <!-- reference: https://edupala.com/how-to-implement-angular-material-dropdown-select/ -->
 <!-- TODO: include a list of seletions available for value binding -->
 <div class="setting">
-  <mat-form-field appearance="outline">
-    <mat-label>Selected Framwork</mat-label>
-    <mat-select [formControl]="selectedFW">
-      <mat-option *ngFor="let framwork of frameworks" [value]="framwork">
-      {{ framwork }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <form #f="ngForm" class="example-form" (ngSubmit)="onSubmit(f)" >
+    <!-- dropdown menu -->
+    <mat-form-field appearance="outline">
+      <mat-label>Select Field</mat-label>
+      <mat-select name="selectedField" ngModel>
+        <mat-option *ngFor="let field of fields" [value]="field">
+        {{ field }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- cell and field -->
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Cell Position</mat-label>
+      <input matInput placeholder="Ex. A1" name="selectedCell" ngModel>
+    </mat-form-field>
+  
+    <!-- <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Field</mat-label>
+      <textarea matInput placeholder="Ex. MaxFillingTime"></textarea>
+    </mat-form-field> -->
+    <input type="submit" value="Save">
+  </form>
 </div>
