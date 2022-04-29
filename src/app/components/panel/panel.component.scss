@@ -1,15 +1,26 @@
 .panel {
   width:900px;
   padding: 0% 20px;
+
+  &__dashboard {
+    position: absolute;
+    bottom: 50px;
+
+    &__item {
+      display: flex;
+      margin-bottom: 10px;
+    }
+  }
 }
 
 #luckysheet {
   margin:0px;
   padding:0px;
   position: absolute;
+  display: inline-block;
   width:900px;
   left: 0px;
   top: 50px;
-  bottom: 100px;
+  bottom: 250px;
   outline: none;
 }
