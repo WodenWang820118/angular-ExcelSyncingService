@@ -16,4 +16,9 @@
     </mat-form-field>
     <input type="submit" value="Save">
   </form>
+  <div class="setting__information">
+    <div *ngFor="let binding of vbService.getPairForms()">
+      <p>{{ binding.label }} binds {{ binding.cell }} with value {{ binding.value }}</p>
+    </div>
+  </div>
 </div>

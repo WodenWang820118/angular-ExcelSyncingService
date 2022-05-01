@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PairForm } from '../../interface/pairForm';
-import { pairForms } from 'src/app/data';
+// import { pairForms } from 'src/app/data';
 import { fields } from 'src/app/fields';
 import { ValueBindingService } from '../../service/valueBinding.service';
 
@@ -15,9 +15,15 @@ export class SettingComponent implements OnInit {
   selectedCell = new FormControl();
 
   fields: string[] = fields;
+  // pairFormsSubscription: Subscription;
 
-  constructor(private vbService: ValueBindingService) {
+  constructor(public vbService: ValueBindingService) {
     this.vbService.initCharHash();
+    // this.pairFormsSubscription = this.vbService.getPairForms()
+    //   .subscribe((response: PairForm[]) => {
+    //   return response;
+    // });
+    
   }
 
   ngOnInit(): void {
@@ -42,10 +48,12 @@ export class SettingComponent implements OnInit {
     }
   }
 
-  saveData(newBinding: PairForm) {
+  async saveData(newBinding: PairForm) {
     // TODO: need to write to a file to data checking
+    let pairForms = this.vbService.getPairForms();
     if (pairForms.length === 0) {
-      pairForms.push(newBinding);
+      // pairForms.push(newBinding);
+      this.vbService.addPairForm(newBinding);
     } else {
       for (let p of pairForms) {
         // won't save the data with the same label and the same cell
@@ -56,7 +64,7 @@ export class SettingComponent implements OnInit {
         } else {
           // different label with the same cell
           // different label with different cell
-          pairForms.push(newBinding);
+          this.vbService.addPairForm(newBinding);
         }
       }
     }

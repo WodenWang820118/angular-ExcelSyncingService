@@ -4,8 +4,9 @@ import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import * as luckyexcel from 'luckyexcel';
 import * as luckysheet from 'luckysheet';
 
-import { pairForms } from 'src/app/data';
 import { fields } from 'src/app/fields';
+import { PairForm } from 'src/app/interface/pairForm';
+import { ValueBindingService } from 'src/app/service/valueBinding.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class PanelComponent implements OnInit {
   maxPressure: FormControl;
   customForm: FormGroup;
 
-  constructor() {
+  constructor(private vbService: ValueBindingService) {
     this.maxFillingTime = new FormControl(0);
     this.maxPackingTime = new FormControl(0);
     this.maxPressure = new FormControl(0);
@@ -72,6 +73,7 @@ export class PanelComponent implements OnInit {
 
   syncData(): void {
     const sheet = luckysheet.getSheet("Sheet1");
+    let pairForms: PairForm[] = this.vbService.getPairForms();
 
     for (let p of pairForms) {
       if (fields.includes(p.label)) {
