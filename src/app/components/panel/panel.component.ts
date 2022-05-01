@@ -1,31 +1,40 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { pairForms } from 'src/app/data';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+
 import * as luckyexcel from 'luckyexcel';
 import * as luckysheet from 'luckysheet';
-import { PairForm } from 'src/app/pairForm';
-import { FormControl } from '@angular/forms';
+
+import { pairForms } from 'src/app/data';
+import { fields } from 'src/app/fields';
+
 
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss']
 })
-export class PanelComponent implements OnInit, AfterViewInit {
+export class PanelComponent implements OnInit {
 
   maxFillingTime: FormControl;
   maxPackingTime: FormControl;
   maxPressure: FormControl;
+  customForm: FormGroup;
 
   constructor() {
     this.maxFillingTime = new FormControl(0);
     this.maxPackingTime = new FormControl(0);
     this.maxPressure = new FormControl(0);
+
+    // the customeForm is used to find the specific formControl
+    // TODO: a formGroup to add all the controls dynamically according to fields?
+    this.customForm = new FormGroup({
+      maxFillingTime: this.maxFillingTime,
+      maxPackingTime: this.maxPackingTime,
+      maxPressure: this.maxPressure
+    });
   }
 
   ngOnInit(): void {
-  }
-
-  ngAfterViewInit(): void {
   }
 
   // reference: https://github.com/mengshukeji/Luckyexcel/blob/master/src/index.html
@@ -61,21 +70,37 @@ export class PanelComponent implements OnInit, AfterViewInit {
     })
   }
 
-  syncData() {
-    // successfully get the entered value
-    // after the value binding, can use the data.ts array to retrieve the added data again
-    // TODO: how to get the cell value according to the user's specific cell value. e.g., A1
+  syncData(): void {
     const sheet = luckysheet.getSheet("Sheet1");
-    let bindingValue = luckysheet.getCellValue(0, 0, sheet)
-    // console.log(bindingValue)
-    // console.log(JSON.stringify(pairForms));
+
     for (let p of pairForms) {
-      if (p.label === 'maxFillingTime') {
-        p.value = bindingValue;
-        this.maxFillingTime.setValue(bindingValue);
+      if (fields.includes(p.label)) {
+        let bindingValue = luckysheet.
+                            getCellValue(p.coordinate.getX(), p.coordinate.getY(), sheet)
+        let control = this.getControl(this.customForm, p.label);
+
+        if (control) {
+          this.updateControlValue(control, bindingValue)
+          p.value = bindingValue;
+        } else {
+          console.log(`The control ${p.label} is not found`);
+          return
+        }
+      } else {
+        console.log(`Cannot find the field ${p.label}`);
         return
       }
     }
-    console.log(`Cannot find the matching label.`);
+    console.log(`Successfully updata all the controls`);
   }
+
+  getControl(formGroup: FormGroup, controlName: string): AbstractControl | null {
+    return formGroup.get(controlName);
+  }
+
+  updateControlValue(control: AbstractControl, value: number): void {
+    control.setValue(value);
+  }
+
+
 }

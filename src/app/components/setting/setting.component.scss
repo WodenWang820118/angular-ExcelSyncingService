@@ -1,4 +1,14 @@
 .setting {
   width: 100%;
   padding: 0% 15px;
+
+  &__form {
+    :nth-child(1) {
+      margin-right: 10px;
+    }
+    :nth-child(2) {
+      padding-top: 10px;
+      margin-right: 10px;
+    }
+  }
 }

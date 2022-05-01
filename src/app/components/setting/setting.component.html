@@ -1,18 +1,18 @@
 <div class="setting">
-  <form #f="ngForm" class="example-form" (ngSubmit)="onSubmit(f)" >
+  <form #f="ngForm" class="setting__form" (ngSubmit)="onSubmit(f)" >
     <!-- dropdown menu -->
-    <mat-form-field appearance="outline">
+    <mat-form-field class="setting__dropdown" appearance="outline">
       <mat-label>Select Field</mat-label>
-      <mat-select name="selectedField" ngModel>
+      <mat-select name="selectedField" ngModel required>
         <mat-option *ngFor="let field of fields" [value]="field">
         {{ field }}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <!-- cell and field -->
-    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-form-field class="setting__field" appearance="fill">
       <mat-label>Cell Position</mat-label>
-      <input matInput placeholder="Ex. A1" name="selectedCell" ngModel>
+      <input matInput placeholder="Ex. A1" name="selectedCell" ngModel required>
     </mat-form-field>
     <input type="submit" value="Save">
   </form>

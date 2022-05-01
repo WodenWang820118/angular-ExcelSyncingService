@@ -1,3 +1,3 @@
-import { PairForm } from "./pairForm";
+import { PairForm } from "./interface/pairForm";
 
 export const pairForms: PairForm[] = [];

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { WindowService } from './window.service';
+import { WindowService } from './service/window.service';
 import * as luckysheet from 'luckysheet';
 
 @Component({
