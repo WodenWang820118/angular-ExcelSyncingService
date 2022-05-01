@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { PairForm } from '../../pairForm';
 import { pairForms } from 'src/app/data';
 import { CharHashPair } from './charHash';
+import { Coordinate } from '../../Coordinate';
 
 @Component({
   selector: 'app-setting',
@@ -49,10 +50,11 @@ export class SettingComponent implements OnInit {
 
     if (isCellVerified) {
       // TODO: should translate the cell into a number here
-      // TODO: the cell should a Point(x, y)
+
       let newBinding: PairForm = {
         label: field,
         cell: cell,
+        coordinate: new Coordinate(0, 0),
         value: 0
       }
       this.saveData(newBinding);
