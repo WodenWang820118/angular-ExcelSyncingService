@@ -20,6 +20,7 @@ export class PanelComponent implements OnInit {
   maxPackingTime: FormControl;
   maxPressure: FormControl;
   customForm: FormGroup;
+  sheet: any;
 
   constructor(private vbService: ValueBindingService) {
     this.maxFillingTime = new FormControl(0);
@@ -73,14 +74,23 @@ export class PanelComponent implements OnInit {
 
   syncData(): void {
     const sheet = luckysheet.getSheet("Sheet1");
+    console.log(sheet)
     let pairForms: PairForm[] = this.vbService.getPairForms();
 
     for (let p of pairForms) {
       if (fields.includes(p.label)) {
-        let bindingValue = luckysheet.
-                            getCellValue(p.coordinate.getX(), p.coordinate.getY(), sheet)
-        let control = this.getControl(this.customForm, p.label);
+        let x: number = p.coordinate.getX();
+        let y: number = p.coordinate.getY();
+        
+        console.log(`x: ${x}, y: ${y}`);
 
+        // note that the function getCellValue is taking (row, col)
+        let bindingValue = luckysheet.getCellValue(y, x, sheet);
+        let control = this.getControl(this.customForm, p.label);
+        
+        
+        console.log(Number(bindingValue));
+        
         if (control) {
           this.updateControlValue(control, bindingValue)
           p.value = bindingValue;

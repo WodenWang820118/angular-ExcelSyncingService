@@ -13,17 +13,10 @@ import { ValueBindingService } from '../../service/valueBinding.service';
 export class SettingComponent implements OnInit {
   selectedField = new FormControl();
   selectedCell = new FormControl();
-
   fields: string[] = fields;
-  // pairFormsSubscription: Subscription;
 
   constructor(public vbService: ValueBindingService) {
-    this.vbService.initCharHash();
-    // this.pairFormsSubscription = this.vbService.getPairForms()
-    //   .subscribe((response: PairForm[]) => {
-    //   return response;
-    // });
-    
+    this.vbService.initCharHash();    
   }
 
   ngOnInit(): void {
@@ -48,7 +41,7 @@ export class SettingComponent implements OnInit {
     }
   }
 
-  async saveData(newBinding: PairForm) {
+  saveData(newBinding: PairForm) {
     // TODO: need to write to a file to data checking
     let pairForms = this.vbService.getPairForms();
     if (pairForms.length === 0) {
