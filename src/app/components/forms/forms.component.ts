@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ValueSyncService } from 'src/app/service/valueSync.service';
 import { fields } from 'src/app/fields';
 import { PairForm } from 'src/app/interface/pairForm';
+import { ValueBindingService } from 'src/app/service/valueBinding.service';
 
 @Component({
   selector: 'app-forms',
@@ -16,7 +17,7 @@ export class FormsComponent implements OnInit {
   maxPressure: FormControl;
   customForm: FormGroup;
 
-  constructor(private vsService: ValueSyncService) {
+  constructor(private vbService: ValueBindingService, private vsService: ValueSyncService) {
     this.maxFillingTime = new FormControl(0);
     this.maxPackingTime = new FormControl(0);
     this.maxPressure = new FormControl(0);
@@ -27,13 +28,14 @@ export class FormsComponent implements OnInit {
       maxPackingTime: this.maxPackingTime,
       maxPressure: this.maxPressure
     });
-
-    this.vsService.getPairFormsSubject().subscribe(pairForms => {
-      this.syncForms(pairForms);
-    })
   }
 
   ngOnInit(): void {
+    // get data from server and sync the forms
+    this.vsService.getPairFormsFromServer().subscribe(pairForms => {
+      this.syncForms(pairForms);
+      this.vbService.setPairForms(pairForms); // vbService for local data CRUD
+    })
   }
 
   syncForms(pairForms: PairForm[]) {

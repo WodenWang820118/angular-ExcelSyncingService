@@ -3,6 +3,11 @@ import { Coordinate } from '../../app/class/Coordinate';
 import { Injectable } from '@angular/core';
 import { PairForm } from '../interface/pairForm';
 
+/**
+ * @description This class is used to manage the data CRUD locally
+ * 
+ */
+
 @Injectable({providedIn: 'root'})
 export class ValueBindingService {
   private charHash: CharHashPair[] = [];
@@ -73,6 +78,10 @@ export class ValueBindingService {
 
   getPairForms(): PairForm[] {
     return this.pairForms;
+  }
+
+  setPairForms(pairForms: PairForm[]) {
+    this.pairForms = pairForms;
   }
 
   addPairForm(pairForm: PairForm) {

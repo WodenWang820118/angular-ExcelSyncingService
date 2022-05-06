@@ -58,11 +58,13 @@ export class PanelComponent implements OnInit {
   syncData(): void {
     const sheet = luckysheet.getSheet("Sheet1");
     let pairForms: PairForm[] = this.vbService.getPairForms();
+    console.log(`pairForms: ${JSON.stringify(pairForms)}`);
 
     for (let p of pairForms) {
       if (fields.includes(p.label)) {
-        let x: number = p.coordinate.getX();
-        let y: number = p.coordinate.getY();
+
+        let x: number = p.coordinate.x;
+        let y: number = p.coordinate.y;
         
         let bindingValue = luckysheet.getCellValue(y, x, sheet);
         p.value = bindingValue;
