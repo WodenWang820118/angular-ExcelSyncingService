@@ -10,12 +10,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsComponent } from './components/forms/forms.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PanelComponent,
-    SettingComponent
+    SettingComponent,
+    FormsComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,8 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

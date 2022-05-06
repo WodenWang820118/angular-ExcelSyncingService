@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 
 import * as luckyexcel from 'luckyexcel';
 import * as luckysheet from 'luckysheet';
@@ -7,6 +6,7 @@ import * as luckysheet from 'luckysheet';
 import { fields } from 'src/app/fields';
 import { PairForm } from 'src/app/interface/pairForm';
 import { ValueBindingService } from 'src/app/service/valueBinding.service';
+import { ValueSyncService } from 'src/app/service/valueSync.service';
 
 
 @Component({
@@ -16,30 +16,13 @@ import { ValueBindingService } from 'src/app/service/valueBinding.service';
 })
 export class PanelComponent implements OnInit {
 
-  maxFillingTime: FormControl;
-  maxPackingTime: FormControl;
-  maxPressure: FormControl;
-  customForm: FormGroup;
-  sheet: any;
-
-  constructor(private vbService: ValueBindingService) {
-    this.maxFillingTime = new FormControl(0);
-    this.maxPackingTime = new FormControl(0);
-    this.maxPressure = new FormControl(0);
-
-    // the customeForm is used to find the specific formControl
-    // TODO: a formGroup to add all the controls dynamically according to fields?
-    this.customForm = new FormGroup({
-      maxFillingTime: this.maxFillingTime,
-      maxPackingTime: this.maxPackingTime,
-      maxPressure: this.maxPressure
-    });
+  constructor(private vbService: ValueBindingService,
+              private vsService: ValueSyncService) {
   }
 
   ngOnInit(): void {
   }
 
-  // reference: https://github.com/mengshukeji/Luckyexcel/blob/master/src/index.html
   parseXLSX(event: any) {
     const files = event.target.files;
 
@@ -54,8 +37,8 @@ export class PanelComponent implements OnInit {
       alert("Currently only supports the import of xlsx files");
       return;
     }
-
-    luckyexcel.transformExcelToLucky(files[0], function(exportJson: any, luckysheetfile: any) {
+    // reference: https://github.com/mengshukeji/Luckyexcel/blob/master/src/index.html
+    luckyexcel.transformExcelToLucky(files[0], function(exportJson: any) {
       if (exportJson.sheets == null || exportJson.sheets.lengh == 0) {
         alert("Failed to read the content of the excel file, currently does not support xls files!");
         return;
@@ -74,7 +57,6 @@ export class PanelComponent implements OnInit {
 
   syncData(): void {
     const sheet = luckysheet.getSheet("Sheet1");
-    console.log(sheet)
     let pairForms: PairForm[] = this.vbService.getPairForms();
 
     for (let p of pairForms) {
@@ -82,37 +64,15 @@ export class PanelComponent implements OnInit {
         let x: number = p.coordinate.getX();
         let y: number = p.coordinate.getY();
         
-        console.log(`x: ${x}, y: ${y}`);
-
-        // note that the function getCellValue is taking (row, col)
         let bindingValue = luckysheet.getCellValue(y, x, sheet);
-        let control = this.getControl(this.customForm, p.label);
-        
-        
-        console.log(Number(bindingValue));
-        
-        if (control) {
-          this.updateControlValue(control, bindingValue)
-          p.value = bindingValue;
-        } else {
-          console.log(`The control ${p.label} is not found`);
-          return
-        }
+        p.value = bindingValue;
       } else {
         console.log(`Cannot find the field ${p.label}`);
         return
       }
     }
-    console.log(`Successfully updata all the controls`);
+    console.log(`Successfully update all the form values`);
+    // send the pairForms to the valueSyncService
+    this.vsService.setUpdatePairForms(pairForms);
   }
-
-  getControl(formGroup: FormGroup, controlName: string): AbstractControl | null {
-    return formGroup.get(controlName);
-  }
-
-  updateControlValue(control: AbstractControl, value: number): void {
-    control.setValue(value);
-  }
-
-
 }

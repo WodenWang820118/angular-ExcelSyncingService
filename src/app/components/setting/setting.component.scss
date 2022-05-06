@@ -1,14 +1,24 @@
-.setting {
-  width: 100%;
-  padding: 0% 15px;
+@import "src/app/app.component.scss";
 
-  &__form {
-    :nth-child(1) {
-      margin-right: 10px;
+.setting {
+  width: 600px;
+
+  &__set {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__save {
+    display: block;
+
+    input[type=submit] {
+      display: none;
     }
-    :nth-child(2) {
-      padding-top: 10px;
-      margin-right: 10px;
+
+    &__label {
+      @include matInput-label;
     }
   }
 }

@@ -1,26 +1,17 @@
 <div class="panel">
-  <div>
-    <input
-      style="font-size:16px;"
-      type="file"
-      (change)="parseXLSX($event)"
-    >
-    <input type="button" value="Save" (click)="syncData()">
-    <div id="luckysheet"></div>
-  </div>
-
-  <div class="panel__dashboard">
-    <div class="panel__dashboard__item">
-      <p>maxFillingTime: &nbsp;</p>
-      <input [formControl]="maxFillingTime" [value]="maxFillingTime.value">
+  <div class="panel__tools">
+    <div class="panel__upload">
+      <input
+        id="btn-upload"
+        style="font-size:16px;"
+        type="file"
+        (change)="parseXLSX($event)"
+      >
+      <label class="panel__upload__label" for="btn-upload">Upload</label>
     </div>
-    <div class="panel__dashboard__item">
-      <p>maxPackingTime: &nbsp;</p>
-      <input [formControl]="maxPackingTime" [value]="maxPackingTime.value">
-    </div>
-    <div class="panel__dashboard__item">
-      <p>maxPressure: &nbsp;</p>
-      <input [formControl]="maxPressure" [value]="maxPressure.value">
+    <div>
+      <button mat-raised-button (click)="syncData()">Sync</button>
     </div>
   </div>
+  <div id="luckysheet"></div>
 </div>

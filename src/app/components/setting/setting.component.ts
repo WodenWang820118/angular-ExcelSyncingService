@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PairForm } from '../../interface/pairForm';
-// import { pairForms } from 'src/app/data';
 import { fields } from 'src/app/fields';
 import { ValueBindingService } from '../../service/valueBinding.service';
 
@@ -28,24 +27,22 @@ export class SettingComponent implements OnInit {
 
     if (this.vbService.verifyCell(cell)) {
       let coordinate = this.vbService.convertCellToCoordinate(cell);
-      // console.log(`The coordinate is ${coordinate.getX()}, ${coordinate.getY()}`);
       let newBinding: PairForm = {
         label: field,
         cell: cell,
         coordinate: coordinate,
         value: 0
       }
-      this.saveData(newBinding);
+      this.saveBindingInfo(newBinding);
     } else {
       return
     }
   }
 
-  saveData(newBinding: PairForm) {
+  saveBindingInfo(newBinding: PairForm) {
     // TODO: need to write to a file to data checking
     let pairForms = this.vbService.getPairForms();
     if (pairForms.length === 0) {
-      // pairForms.push(newBinding);
       this.vbService.addPairForm(newBinding);
     } else {
       for (let p of pairForms) {
