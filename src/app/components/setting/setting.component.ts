@@ -13,6 +13,7 @@ export class SettingComponent implements OnInit {
   selectedField = new FormControl();
   selectedCell = new FormControl();
   fields: string[] = fields;
+  displayedColumns: string[] = ['label', 'cell', 'value'];
 
   constructor(public vbService: ValueBindingService) {
     this.vbService.initCharHash();    

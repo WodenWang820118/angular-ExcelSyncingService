@@ -25,10 +25,36 @@
       </div>
     </div>
   </form>
-  <!-- TODO: refactor to be an expandable styled form -->
-  <div class="setting__information">
-    <div *ngFor="let binding of vbService.getPairForms()">
-      <p>{{ binding.label }} binds {{ binding.cell }} with value {{ binding.value }}</p>
-    </div>
+  <div class="setting__expansion-panel">
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Bonded Fields
+        </mat-panel-title>
+        <mat-panel-description>
+          Table of bonded fields
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p *ngIf="vbService.getPairForms().length === 0">Currently, no Excel cells get bonded</p>
+      <table class="setting__table" *ngIf="vbService.getPairForms().length !== 0" mat-table [dataSource]="vbService.getPairForms()">
+        <ng-container matColumnDef="label">
+          <th mat-header-cell *matHeaderCellDef> Label </th>
+          <td mat-cell *matCellDef="let pairForm"> {{ pairForm.label }} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="cell">
+          <th mat-header-cell *matHeaderCellDef> Cell </th>
+          <td mat-cell *matCellDef="let pairForm"> {{ pairForm.cell }} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef> Value </th>
+          <td mat-cell *matCellDef="let pairForm"> {{ pairForm.value }} </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-expansion-panel>
   </div>
 </div>
