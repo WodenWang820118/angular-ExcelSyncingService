@@ -3,6 +3,7 @@ import { AbstractControl, FormGroup } from "@angular/forms";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { PairForm } from "../interface/pairForm";
+import { fields } from "../fields";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -28,8 +29,11 @@ export class ValueSyncService {
   setUpdatePairForms(pairForms: PairForm[]) {
     this.pairForms = pairForms;
     this.pairFormsSubject.next(this.pairForms);
-    // FIXME: this is not working
-    this.updatePairForms(this.pairForms).subscribe();
+
+    // update all the forms to the server
+    this.pairForms.forEach(pairForm => {
+      this.updatePairForm(pairForm).subscribe();
+    });
   }
 
   getPairFormsSubject(): Subject<PairForm[]> {
@@ -57,11 +61,25 @@ export class ValueSyncService {
     return this.http.post<PairForm>(this.apiURL, pairForm, httpOptions);
   }
 
-  deletePairForm(pairForm: PairForm): Observable<PairForm> {
-    return this.http.delete<PairForm>(`${this.apiURL}/${pairForm.label}`, httpOptions);
-  }
-
-  updatePairForms(pairForms: PairForm[]): Observable<PairForm[]> {
-    return this.http.put<PairForm[]>(this.apiURL, pairForms, httpOptions);
+  // since the customForm might be different in each component,
+  // the syncForm function is defined inside the valueSync.service.ts for customization
+  // the pairFormsSubject is used as an intermediate object to sync the forms locally
+  syncForms(pairForms: PairForm[], customForm: FormGroup): void {
+    for (let p of pairForms) {
+      if (fields.includes(p.label)) {
+        let control = this.getControl(customForm, p.label);
+     
+        if (control) {
+          this.updateControlValue(control, p.value)
+        } else {
+          console.log(`The control ${p.label} is not found`);
+          return
+        }
+      } else {
+        console.log(`Cannot find the field ${p.label}`);
+        return
+      }
+    }
+    console.log(`Successfully updata all the controls`);
   }
 }

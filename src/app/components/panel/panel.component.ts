@@ -58,8 +58,6 @@ export class PanelComponent implements OnInit {
   syncData(): void {
     const sheet = luckysheet.getSheet("Sheet1");
     let pairForms: PairForm[] = this.vbService.getPairForms();
-    console.log(`pairForms: ${JSON.stringify(pairForms)}`);
-
     for (let p of pairForms) {
       if (fields.includes(p.label)) {
 

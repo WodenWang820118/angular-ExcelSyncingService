@@ -17,14 +17,12 @@ export class SettingComponent implements OnInit {
   selectedCell = new FormControl();
   fields: string[] = fields;
   displayedColumns: string[] = ['label', 'cell', 'value'];
-  pairForms: PairForm[] = [];
 
   constructor(public vbService: ValueBindingService, private vsService: ValueSyncService) {
     this.vbService.initCharHash();
 
     this.vsService.getPairFormsFromServer().subscribe(pairForms => {
       console.log(`Subscription triggered`);
-      console.log(`The length of pairForms is ${pairForms.length}`);
       if (pairForms.length > 0) {
         this.vbService.setPairForms(pairForms);
       }
