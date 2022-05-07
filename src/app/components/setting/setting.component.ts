@@ -17,6 +17,7 @@ export class SettingComponent implements OnInit {
   selectedCell = new FormControl();
   fields: string[] = fields;
   displayedColumns: string[] = ['label', 'cell', 'value'];
+  pairForms: PairForm[] = [];
 
   constructor(public vbService: ValueBindingService, private vsService: ValueSyncService) {
     this.vbService.initCharHash();
@@ -50,7 +51,7 @@ export class SettingComponent implements OnInit {
       return
     }
   }
-  // FIXME: a bug to add two identical pairForms
+  
   saveBindingInfo(newBinding: PairForm) {
     let pairForms = this.vbService.getPairForms();
 
@@ -63,10 +64,12 @@ export class SettingComponent implements OnInit {
           return
         } else if (p.label === newBinding.label && p.cell !== newBinding.cell) {
           p.cell = newBinding.cell;
+          return
         } else {
           // different label with the same cell
           // different label with different cell
           this.addPairFormToServer(newBinding);
+          return
         }
       }
     }
