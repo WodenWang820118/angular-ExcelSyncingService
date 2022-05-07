@@ -6,6 +6,9 @@ import { ValueBindingService } from '../../service/valueBinding.service';
 import { ValueSyncService } from 'src/app/service/valueSync.service';
 import { MatTable } from '@angular/material/table';
 
+// TODO: add the delete function in the table
+// reference: https://stackoverflow.com/questions/45183909/edit-delete-button-for-each-row-header-column-is-action-in-the-md-table
+
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.component.html',
