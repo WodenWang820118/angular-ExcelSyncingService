@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 import * as luckyexcel from 'luckyexcel';
 import * as luckysheet from 'luckysheet';
@@ -7,32 +7,39 @@ import { fields } from 'src/app/fields';
 import { PairForm } from 'src/app/interface/pairForm';
 import { ValueSyncService } from 'src/app/service/valueSync.service';
 
-// TODO: bring back the value from the server and update the panel Excel sheet
+// TODO: add the download function
 
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss']
 })
-export class PanelComponent implements OnInit {
+export class PanelComponent implements OnInit, AfterViewInit {
 
   pairForms: PairForm[] = [];
-
   constructor(private vsService: ValueSyncService) {
-    // retrieve the pairForms from the server at the first time
-    this.vsService.getPairFormsFromServer().subscribe(pairForms => {
-      this.pairForms = pairForms;
-      this.vsService.syncLuckySheet(this.pairForms, luckysheet, "Sheet1");
-    })
-
-    // subscribe to the changes of the pairForms subject
-    this.vsService.getPairFormsSubject().subscribe(pairForms => {
-      this.pairForms = pairForms;
-      this.vsService.syncLuckySheet(this.pairForms, luckysheet, "Sheet1");
-    })
   }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
+    // the luckysheet is initialized in the ngAfterViewInit in {app.component.ts}
+    // therefore, to ensure the luckysheet is ready, the subscription is placed later
+
+    setTimeout(() => {
+      // retrieve the pairForms from the server at the first time
+      this.vsService.getPairFormsFromServer().subscribe(pairForms => {
+        this.pairForms = pairForms;
+        this.vsService.syncLuckySheet(this.pairForms, luckysheet, "Sheet1");
+      })
+  
+      // subscribe to the changes of the pairForms subject
+      this.vsService.getPairFormsSubject().subscribe(pairForms => {
+        this.pairForms = pairForms;
+        this.vsService.syncLuckySheet(this.pairForms, luckysheet, "Sheet1");
+      })
+    }, 200);
   }
 
   parseXLSX(event: any) {

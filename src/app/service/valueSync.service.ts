@@ -11,10 +11,6 @@ const httpOptions = {
   })
 }
 
-/**
- * @description This class is used to manage the data between the server and the valueBindingService
- */
-
 @Injectable({providedIn: 'root'})
 export class ValueSyncService {
 
@@ -24,6 +20,10 @@ export class ValueSyncService {
 
   constructor(private http: HttpClient) {
     this.pairFormsSubject = new BehaviorSubject<PairForm[]>(this.pairForms);
+    // get data from the server and enable mocking form to submit the data
+    this.getPairFormsFromServer().subscribe(pairForms => {
+      this.pairForms = pairForms;
+    });
   }
 
   setUpdatePairForms(pairForms: PairForm[]) {
@@ -40,13 +40,28 @@ export class ValueSyncService {
     return this.pairFormsSubject;
   }
 
+  getPairForms(): PairForm[] {
+    return this.pairForms;
+  }
+
   getControl(formGroup: FormGroup, controlName: string): AbstractControl | null {
     return formGroup.get(controlName);
+  }
+
+  getControlValue(formGroup: FormGroup, controlName: string): number {
+    let control = this.getControl(formGroup, controlName);
+    if (control) {
+      return control.value;
+    } else {
+      return 0;
+    }
   }
 
   updateControlValue(control: AbstractControl, value: number): void {
     control.setValue(value);
   }
+
+  // API CRUD
 
   getPairFormsFromServer(): Observable<PairForm[]> {
     return this.http.get<PairForm[]>(this.apiURL);
@@ -60,6 +75,8 @@ export class ValueSyncService {
     console.log(`Add pair form: to the server`);
     return this.http.post<PairForm>(this.apiURL, pairForm, httpOptions);
   }
+
+  // syncing service
 
   // since the customForm might be different in each component,
   // the syncForm function is defined inside the valueSync.service.ts for customization

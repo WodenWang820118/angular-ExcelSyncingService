@@ -1,16 +1,18 @@
 <h1>Mocking Form</h1>
-<!-- TODO: enable form to submit data to the server -->
-<div class="panel__dashboard">
-  <div class="panel__dashboard__item">
+<div class="mocking-form">
+  <div class="mocking-form__item">
     <p>maxFillingTime: &nbsp;</p>
     <input [formControl]="maxFillingTime" [value]="maxFillingTime.value">
   </div>
-  <div class="panel__dashboard__item">
+  <div class="mocking-form__item">
     <p>maxPackingTime: &nbsp;</p>
     <input [formControl]="maxPackingTime" [value]="maxPackingTime.value">
   </div>
-  <div class="panel__dashboard__item">
+  <div class="mocking-form__item">
     <p>maxPressure: &nbsp;</p>
     <input [formControl]="maxPressure" [value]="maxPressure.value">
+  </div>
+  <div>
+    <button mat-raised-button color="primary" (click)="saveForms()">Submit Form</button>
   </div>
 </div>

@@ -39,4 +39,14 @@ export class FormsComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  // save the forms to the server
+  saveForms() {
+    let forms = this.vsService.getPairForms();
+    forms.forEach(form => {
+      form.value = Number(this.vsService.getControlValue(this.customForm, form.label));
+    })
+
+    this.vsService.setUpdatePairForms(forms);
+  }
 }
