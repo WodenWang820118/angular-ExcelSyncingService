@@ -1,12 +1,10 @@
 import { CharHashPair } from '../../app/interface/charHash';
 import { Coordinate } from '../../app/class/Coordinate';
 import { Injectable } from '@angular/core';
-import { PairForm } from '../interface/pairForm';
 
 @Injectable({providedIn: 'root'})
 export class ValueBindingService {
   private charHash: CharHashPair[] = [];
-  private pairForms: PairForm[] = [];
 
   constructor() { }
 
@@ -70,13 +68,4 @@ export class ValueBindingService {
   getCharHash(): CharHashPair[] {
     return this.charHash;
   }
-
-  getPairForms(): PairForm[] {
-    return this.pairForms;
-  }
-
-  addPairForm(pairForm: PairForm) {
-    this.pairForms.push(pairForm);
-  }
-  
 }

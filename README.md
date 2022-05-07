@@ -1,4 +1,18 @@
-# AngularCsv
+# Angular-ExcelSyncingService
+
+## Overview
+
+The Excel syncing service is a project to synchronize the data between Excel and HTML forms. The project is either used to generate a downloadable formatted Excel file or extract the data from the Excel to be used in HTML forms.
+
+Specifically, after cell binding, it can: 
+
+1. Sync the data from a defined cell to specific form input.
+2. Sync the data from the form input to the Excel spreadsheet.
+3. Use `json-server` to mock REST API.
+
+
+
+## Angular CLI version
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
 
@@ -6,23 +20,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Json-server
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-# angular-csv
+The mock server uses the `label` as unique ids, use `json-server db.json --id label` to set `label` as id field.

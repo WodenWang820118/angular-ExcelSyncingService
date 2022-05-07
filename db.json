@@ -1,0 +1,44 @@
+{
+  "forms": [
+    {
+      "label": "maxFillingTime",
+      "cell": "A1",
+      "coordinate": {
+        "x": 0,
+        "y": 0
+      },
+      "value": 0,
+      "id": 1
+    },
+    {
+      "label": "maxPackingTime",
+      "cell": "A2",
+      "coordinate": {
+        "x": 0,
+        "y": 1
+      },
+      "value": 0,
+      "id": 2
+    },
+    {
+      "label": "maxPressure",
+      "cell": "A3",
+      "coordinate": {
+        "x": 0,
+        "y": 2
+      },
+      "value": 0,
+      "id": 3
+    },
+    {
+      "label": "maxPressure",
+      "cell": "A3",
+      "coordinate": {
+        "x": 0,
+        "y": 2
+      },
+      "value": 0,
+      "id": 4
+    }
+  ]
+}

@@ -8,13 +8,15 @@ import * as luckysheet from 'luckysheet';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
-  title = 'angular-csv';
+  title = 'angular-Excel';
 
   constructor(private windowService: WindowService) {}
 
   ngOnInit(): void {
   }
 
+  // TODO: replace Luckysheet logo and title with custom logo and title
+  // TODO: add extra information for styling the luckysheet
   ngAfterViewInit() {
     let nativeWindow = this.windowService.nativeWindow;
     nativeWindow.$(function() {

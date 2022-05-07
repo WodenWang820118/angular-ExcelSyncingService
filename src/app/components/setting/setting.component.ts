@@ -1,8 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PairForm } from '../../interface/pairForm';
 import { fields } from 'src/app/fields';
 import { ValueBindingService } from '../../service/valueBinding.service';
+import { ValueSyncService } from 'src/app/service/valueSync.service';
+import { MatTable } from '@angular/material/table';
+
+// TODO: add the delete function in the table
+// reference: https://stackoverflow.com/questions/45183909/edit-delete-button-for-each-row-header-column-is-action-in-the-md-table
 
 @Component({
   selector: 'app-setting',
@@ -10,12 +15,25 @@ import { ValueBindingService } from '../../service/valueBinding.service';
   styleUrls: ['./setting.component.scss']
 })
 export class SettingComponent implements OnInit {
+  @ViewChild('table') table!: MatTable<any>;
   selectedField = new FormControl();
   selectedCell = new FormControl();
   fields: string[] = fields;
+  displayedColumns: string[] = ['label', 'cell', 'value'];
+  pairForms: PairForm[] = [];
 
-  constructor(public vbService: ValueBindingService) {
-    this.vbService.initCharHash();    
+  constructor(public vbService: ValueBindingService, private vsService: ValueSyncService) {
+    this.vbService.initCharHash();
+
+    // retrieve the pairForms from the server at the first time
+    this.vsService.getPairFormsFromServer().subscribe(pairForms => {
+      this.pairForms = pairForms;
+    })
+
+    // subscribe to the changes of the pairForms subject
+    this.vsService.getPairFormsSubject().subscribe(pairForms => {
+      this.pairForms = pairForms;
+    })
   }
 
   ngOnInit(): void {
@@ -38,25 +56,32 @@ export class SettingComponent implements OnInit {
       return
     }
   }
-
+  
   saveBindingInfo(newBinding: PairForm) {
-    // TODO: need to write to a file to data checking
-    let pairForms = this.vbService.getPairForms();
-    if (pairForms.length === 0) {
-      this.vbService.addPairForm(newBinding);
+    if (this.pairForms.length === 0) {
+      this.addPairFormToServer(newBinding);
     } else {
-      for (let p of pairForms) {
+      for (let p of this.pairForms) {
         // won't save the data with the same label and the same cell
         if (p.label === newBinding.label && p.cell === newBinding.cell) {
           return
-        } else if (p.label === newBinding.label) {
+        } else if (p.label === newBinding.label && p.cell !== newBinding.cell) {
           p.cell = newBinding.cell;
+          return
         } else {
           // different label with the same cell
           // different label with different cell
-          this.vbService.addPairForm(newBinding);
+          this.addPairFormToServer(newBinding);
+          return
         }
       }
     }
+  }
+
+  addPairFormToServer(newBinding: PairForm): void {
+    this.vsService.addPairForm(newBinding)
+      .subscribe(newBinding => {
+        this.table.renderRows();
+      });
   }
 }
