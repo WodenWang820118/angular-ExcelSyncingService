@@ -10,6 +10,10 @@ Specifically, after cell binding, it can:
 2. Sync the data from the form input to the Excel spreadsheet.
 3. Use `json-server` to mock REST API.
 
+## Dependencies
+- [Angular Material](https://material.angular.io/)
+- [LuckySheet](https://mengshukeji.github.io/LuckysheetDocs/)
+- [LuckyExcel](https://www.npmjs.com/package/luckyexcel)
 
 
 ## Angular CLI version
