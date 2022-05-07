@@ -5,9 +5,9 @@ import * as luckysheet from 'luckysheet';
 
 import { fields } from 'src/app/fields';
 import { PairForm } from 'src/app/interface/pairForm';
-import { ValueBindingService } from 'src/app/service/valueBinding.service';
 import { ValueSyncService } from 'src/app/service/valueSync.service';
 
+// TODO: bring back the value from the server and update the panel Excel sheet
 
 @Component({
   selector: 'app-panel',
@@ -16,8 +16,20 @@ import { ValueSyncService } from 'src/app/service/valueSync.service';
 })
 export class PanelComponent implements OnInit {
 
-  constructor(private vbService: ValueBindingService,
-              private vsService: ValueSyncService) {
+  pairForms: PairForm[] = [];
+
+  constructor(private vsService: ValueSyncService) {
+    // retrieve the pairForms from the server at the first time
+    this.vsService.getPairFormsFromServer().subscribe(pairForms => {
+      this.pairForms = pairForms;
+      this.vsService.syncLuckySheet(this.pairForms, luckysheet, "Sheet1");
+    })
+
+    // subscribe to the changes of the pairForms subject
+    this.vsService.getPairFormsSubject().subscribe(pairForms => {
+      this.pairForms = pairForms;
+      this.vsService.syncLuckySheet(this.pairForms, luckysheet, "Sheet1");
+    })
   }
 
   ngOnInit(): void {
@@ -57,8 +69,8 @@ export class PanelComponent implements OnInit {
 
   syncData(): void {
     const sheet = luckysheet.getSheet("Sheet1");
-    let pairForms: PairForm[] = this.vbService.getPairForms();
-    for (let p of pairForms) {
+
+    for (let p of this.pairForms) {
       if (fields.includes(p.label)) {
 
         let x: number = p.coordinate.x;
@@ -73,6 +85,6 @@ export class PanelComponent implements OnInit {
     }
     console.log(`Successfully update all the form values`);
     // send the pairForms to the valueSyncService
-    this.vsService.setUpdatePairForms(pairForms);
+    this.vsService.setUpdatePairForms(this.pairForms);
   }
 }

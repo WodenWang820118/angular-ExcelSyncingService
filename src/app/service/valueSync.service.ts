@@ -82,4 +82,13 @@ export class ValueSyncService {
     }
     console.log(`Successfully updata all the controls`);
   }
+
+  syncLuckySheet(pairForms: PairForm[], luckysheet: any, sheetName: string): void {
+    for (let p of pairForms) {
+      let x = p.coordinate.x
+      let y = p.coordinate.y
+      let value = p.value
+      luckysheet.setCellValue(y, x, value, sheetName);
+    }   
+  }
 }

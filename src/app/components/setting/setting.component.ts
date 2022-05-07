@@ -17,15 +17,19 @@ export class SettingComponent implements OnInit {
   selectedCell = new FormControl();
   fields: string[] = fields;
   displayedColumns: string[] = ['label', 'cell', 'value'];
+  pairForms: PairForm[] = [];
 
   constructor(public vbService: ValueBindingService, private vsService: ValueSyncService) {
     this.vbService.initCharHash();
 
+    // retrieve the pairForms from the server at the first time
     this.vsService.getPairFormsFromServer().subscribe(pairForms => {
-      console.log(`Subscription triggered`);
-      if (pairForms.length > 0) {
-        this.vbService.setPairForms(pairForms);
-      }
+      this.pairForms = pairForms;
+    })
+
+    // subscribe to the changes of the pairForms subject
+    this.vsService.getPairFormsSubject().subscribe(pairForms => {
+      this.pairForms = pairForms;
     })
   }
 
@@ -51,12 +55,10 @@ export class SettingComponent implements OnInit {
   }
   
   saveBindingInfo(newBinding: PairForm) {
-    let pairForms = this.vbService.getPairForms();
-
-    if (pairForms.length === 0) {
+    if (this.pairForms.length === 0) {
       this.addPairFormToServer(newBinding);
     } else {
-      for (let p of pairForms) {
+      for (let p of this.pairForms) {
         // won't save the data with the same label and the same cell
         if (p.label === newBinding.label && p.cell === newBinding.cell) {
           return
@@ -75,8 +77,7 @@ export class SettingComponent implements OnInit {
 
   addPairFormToServer(newBinding: PairForm): void {
     this.vsService.addPairForm(newBinding)
-      .subscribe(newBinding =>{
-        this.vbService.addPairForm(newBinding)
+      .subscribe(newBinding => {
         this.table.renderRows();
       });
   }
