@@ -14,6 +14,7 @@ Specifically, after cell binding, it can:
 - [Angular Material](https://material.angular.io/)
 - [LuckySheet](https://mengshukeji.github.io/LuckysheetDocs/)
 - [LuckyExcel](https://www.npmjs.com/package/luckyexcel)
+- [Exceljs](https://www.npmjs.com/package/exceljs?source=post_page-----b670f32d5c2a----------------------)
 
 
 ## Angular CLI version
