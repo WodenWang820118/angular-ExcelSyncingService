@@ -1,9 +1,7 @@
 import { FileService } from './../../service/fileService.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 
-import * as luckyexcel from 'luckyexcel';
 import * as luckysheet from 'luckysheet';
-import * as excel from 'exceljs';
 
 import { fields } from 'src/app/fields';
 import { PairForm } from 'src/app/interface/pairForm';
@@ -83,6 +81,7 @@ export class PanelComponent implements OnInit, AfterViewInit {
   }
 
   downloadExcel(): void {
-    
+    // TODO: bring the buffer data to a file and download it
+    let data = this.fileService.exportExcelData(luckysheet.getLuckysheetfile());
   }
 }
