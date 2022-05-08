@@ -1,7 +1,9 @@
+import { FileService } from './../../service/fileService.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 import * as luckyexcel from 'luckyexcel';
 import * as luckysheet from 'luckysheet';
+import * as excel from 'exceljs';
 
 import { fields } from 'src/app/fields';
 import { PairForm } from 'src/app/interface/pairForm';
@@ -17,7 +19,7 @@ import { ValueSyncService } from 'src/app/service/valueSync.service';
 export class PanelComponent implements OnInit, AfterViewInit {
 
   pairForms: PairForm[] = [];
-  constructor(private vsService: ValueSyncService) {
+  constructor(private vsService: ValueSyncService, private fileService: FileService) {
   }
 
   ngOnInit(): void {
@@ -56,22 +58,7 @@ export class PanelComponent implements OnInit, AfterViewInit {
       alert("Currently only supports the import of xlsx files");
       return;
     }
-    // reference: https://github.com/mengshukeji/Luckyexcel/blob/master/src/index.html
-    luckyexcel.transformExcelToLucky(files[0], function(exportJson: any) {
-      if (exportJson.sheets == null || exportJson.sheets.lengh == 0) {
-        alert("Failed to read the content of the excel file, currently does not support xls files!");
-        return;
-      }
-      
-      luckysheet.destroy();
-      luckysheet.create({
-        container: 'luckysheet', //luckysheet is the container id
-        showinfobar: false,
-        data:exportJson.sheets,
-        title:exportJson.info.name,
-        userInfo:exportJson.info.name.creator
-      });
-    })
+    this.fileService.convertExcelToLuckySheet(files[0]);
   }
 
   syncData(): void {
@@ -93,5 +80,9 @@ export class PanelComponent implements OnInit, AfterViewInit {
     console.log(`Successfully update all the form values`);
     // send the pairForms to the valueSyncService
     this.vsService.setUpdatePairForms(this.pairForms);
+  }
+
+  downloadExcel(): void {
+    
   }
 }

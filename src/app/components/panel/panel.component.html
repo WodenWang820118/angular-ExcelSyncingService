@@ -9,8 +9,11 @@
       >
       <label class="panel__upload__label" for="btn-upload">Upload</label>
     </div>
-    <div>
+    <div class="panel__sync">
       <button mat-raised-button (click)="syncData()">Sync</button>
+    </div>
+    <div class="panel__download">
+      <button mat-raised-button (click)="downloadExcel()">Download</button>
     </div>
   </div>
   <div id="luckysheet"></div>
