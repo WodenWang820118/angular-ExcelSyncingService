@@ -25,4 +25,7 @@ export class FileService {
       });
     })
   }
+
+  // TODO: add the download function
+  // reference: https://blog.csdn.net/csdn_lsy/article/details/107179708
 }
