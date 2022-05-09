@@ -46,6 +46,7 @@ export class FileService {
     });
 
     // FIXME: the file is able to be downloaded, but needs to be fixed by Microsoft 365, style error
+    // reference: https://github.com/exceljs/exceljs/issues/354
     await workbook.xlsx.writeBuffer().then(function (data: any) {
       let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       filesaver.saveAs(blob, 'test.xlsx');
