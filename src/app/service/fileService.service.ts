@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import * as luckyexcel from "luckyexcel";
 import * as luckysheet from "luckysheet";
 import * as excel from "exceljs";
+import * as filesaver from "file-saver";
 
 
 @Injectable({providedIn: 'root'})
@@ -44,9 +45,11 @@ export class FileService {
       return true
     });
 
-    const buffer = await workbook.xlsx.writeBuffer();
-    console.log(buffer);
-    return buffer
+    // FIXME: the file is able to be downloaded, but needs to be fixed by Microsoft 365, style error
+    await workbook.xlsx.writeBuffer().then(function (data: any) {
+      let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      filesaver.saveAs(blob, 'test.xlsx');
+    });
   }
 
   // setStyleAndValue block

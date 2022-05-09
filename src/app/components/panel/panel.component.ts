@@ -81,7 +81,6 @@ export class PanelComponent implements OnInit, AfterViewInit {
   }
 
   downloadExcel(): void {
-    // TODO: bring the buffer data to a file and download it
-    let data = this.fileService.exportExcelData(luckysheet.getLuckysheetfile());
+    this.fileService.exportExcelData(luckysheet.getLuckysheetfile());
   }
 }

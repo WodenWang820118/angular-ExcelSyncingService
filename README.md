@@ -11,10 +11,20 @@ Specifically, after cell binding, it can:
 3. Use `json-server` to mock REST API.
 
 ## Dependencies
-- [Angular Material](https://material.angular.io/)
-- [LuckySheet](https://mengshukeji.github.io/LuckysheetDocs/)
-- [LuckyExcel](https://www.npmjs.com/package/luckyexcel)
-- [Exceljs](https://www.npmjs.com/package/exceljs?source=post_page-----b670f32d5c2a----------------------)
+- [Angular Material](https://material.angular.io/) - UI components
+- [LuckySheet](https://mengshukeji.github.io/LuckysheetDocs/) - online spreadsheet
+- [LuckyExcel](https://www.npmjs.com/package/luckyexcel) - upload Excel
+- [Exceljs](https://www.npmjs.com/package/exceljs?source=post_page-----b670f32d5c2a----------------------) - convert luckysheet to Excel file
+- [file-saver](https://www.npmjs.com/package/file-saver) - allow the client side to download the edited Excel file
+
+## Plan
+- debug corrupted downloaded file (could be fixed by Microsoft 365 for now)
+- `delete` function in the table row
+- artifacts, including
+    - domain model diagram
+    - design model diagram
+    - design sequence diagram
+    - GRASP principles; architecture
 
 
 ## Angular CLI version
