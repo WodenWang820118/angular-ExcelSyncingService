@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
+import { FormControl, NgForm } from '@angular/forms';
 import { PairForm } from '../../interface/pairForm';
-import { fields } from 'src/app/fields';
 import { ValueBindingService } from '../../service/valueBinding.service';
 import { ValueSyncService } from 'src/app/service/valueSync.service';
 import { MatTable } from '@angular/material/table';
@@ -11,16 +10,17 @@ import { MatTable } from '@angular/material/table';
   templateUrl: './setting.component.html',
   styleUrls: ['./setting.component.scss']
 })
-export class SettingComponent implements OnInit {
+export class SettingComponent {
   @ViewChild('table') table!: MatTable<PairForm>;
   selectedField = new FormControl();
   selectedCell = new FormControl();
-  fields: string[] = fields;
+  fields: string[];
   displayedColumns: string[] = ['label', 'cell', 'value'];
   pairForms: PairForm[] = [];
 
   constructor(public vbService: ValueBindingService, private vsService: ValueSyncService) {
     this.vbService.initCharHash();
+    this.fields = this.vbService.getFields();
 
     // retrieve the pairForms from the server at the first time
     this.vsService.getPairFormsFromServer().subscribe(pairForms => {
@@ -34,12 +34,9 @@ export class SettingComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-  }
-
-  onSubmit(f: any) {
-    let field = f.controls.selectedField.value;
-    let cell = f.controls.selectedCell.value;
+  onSubmit(f: NgForm): void {
+    let field = f.controls['selectedField'].value;
+    let cell = f.controls['selectedCell'].value;
 
     if (this.vbService.verifyCell(cell)) {
       let coordinate = this.vbService.convertCellToCoordinate(cell);
@@ -55,7 +52,7 @@ export class SettingComponent implements OnInit {
     }
   }
   
-  saveBindingInfo(newBinding: PairForm) {
+  saveBindingInfo(newBinding: PairForm): void {
     if (this.pairForms.length === 0) {
       this.addPairFormToServer(newBinding);
     } else {
@@ -88,7 +85,7 @@ export class SettingComponent implements OnInit {
     );
   }
 
-  deleteRow(row: PairForm) {
+  deleteRow(row: PairForm): void {
     console.log(`Trigger the delete function`);
     // delete the row from the server
     this.vsService.deletePairForm(row)

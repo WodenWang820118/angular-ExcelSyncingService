@@ -3,7 +3,7 @@ import { AbstractControl, FormGroup } from "@angular/forms";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { PairForm } from "../interface/pairForm";
-import { fields } from "../fields";
+import { fields } from "./fields";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -26,7 +26,7 @@ export class ValueSyncService {
     });
   }
 
-  setUpdatePairForms(pairForms: PairForm[]) {
+  setUpdatePairForms(pairForms: PairForm[]): void {
     this.pairForms = pairForms;
     this.pairFormsSubject.next(this.pairForms);
 
@@ -111,5 +111,9 @@ export class ValueSyncService {
       let value = p.value;
       luckysheet.setCellValue(y, x, value, sheetName);
     }   
+  }
+
+  getFields(): string[] {
+    return fields;
   }
 }

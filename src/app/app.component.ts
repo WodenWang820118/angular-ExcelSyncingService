@@ -19,12 +19,17 @@ export class AppComponent implements AfterViewInit {
   // TODO: add extra information for styling the luckysheet
   ngAfterViewInit() {
     let nativeWindow = this.windowService.nativeWindow;
-    nativeWindow.$(function() {
-      // configuration item
-      var options = {
-        container: 'luckysheet' // luckysheet is the container id
-      }
-      luckysheet.create(options);
+    nativeWindow.$(() => {
+      this.configureLuckysheet();
     })
+  }
+
+  private configureLuckysheet(): void {
+    // configuration item
+    var options = {
+      container: 'luckysheet' // luckysheet is the container id
+    }
+
+    luckysheet.create(options);
   }
 }

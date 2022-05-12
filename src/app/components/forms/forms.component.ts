@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ValueSyncService } from 'src/app/service/valueSync.service';
 
@@ -7,7 +7,7 @@ import { ValueSyncService } from 'src/app/service/valueSync.service';
   templateUrl: './forms.component.html',
   styleUrls: ['./forms.component.scss']
 })
-export class FormsComponent implements OnInit {
+export class FormsComponent {
 
   maxFillingTime: FormControl;
   maxPackingTime: FormControl;
@@ -37,11 +37,8 @@ export class FormsComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-  }
-
   // save the forms to the server
-  saveForms() {
+  saveForms(): void {
     let forms = this.vsService.getPairForms();
     forms.forEach(form => {
       form.value = Number(this.vsService.getControlValue(this.customForm, form.label));

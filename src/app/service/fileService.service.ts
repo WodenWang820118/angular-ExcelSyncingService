@@ -62,7 +62,7 @@ export class FileService {
         if (!cell) return true;
         let fill = this.fillConvert(cell.bg);
         let font = this.fontConvert(cell.ff, cell.fc, cell.bl, cell.it, cell.fs, cell.cl, cell.ul);
-        let alignment = this.alignmentCovert(cell.vt, cell.ht, cell.tb, cell.tr);
+        let alignment = this.alignmentConvert(cell.vt, cell.ht, cell.tb, cell.tr);
         let value;
         if (cell.f) {
           value = { formula: cell.f, result: cell.v }
@@ -79,7 +79,7 @@ export class FileService {
     })
   }
 
-  fillConvert(bg: string): any {
+  fillConvert(bg: string): object {
     if (!bg) return {};
     let fill = {
       type: 'pattern',
@@ -91,7 +91,7 @@ export class FileService {
     return fill;
   }
 
-  fontConvert(ff = 0, fc = '#000000', bl = 0, it = 0, fs = 10, cl = 0, ul = 0): any {
+  fontConvert(ff = 0, fc = '#000000', bl = 0, it = 0, fs = 10, cl = 0, ul = 0): object {
 
     function isfontStyled(fontIdx: number): boolean {
       return fontIdx === 0 ? false : true;
@@ -129,7 +129,7 @@ export class FileService {
     return font;
   }
 
-  alignmentCovert(vt = 'default', ht = 'defaule', tb = 'default', tr = 'default'): any {
+  alignmentConvert(vt = 'default', ht = 'default', tb = 'default', tr = 'default'): object {
     // type declaration: vertical
     const vertical: { [key: number | string]: string } = {}
     vertical[0] = 'middle'
@@ -193,7 +193,7 @@ export class FileService {
 
   // setBorder block
 
-  setBorder(luckyBorderInfo: any, worksheet: any): void {
+  setBorder(luckyBorderInfo: any[] , worksheet: any): void {
     if (!Array.isArray(luckyBorderInfo)) return;
     luckyBorderInfo.forEach((elem: any) => {
       let border = this.borderConvert(elem.borderType, elem.style, elem.color);
@@ -202,7 +202,7 @@ export class FileService {
     })
   }
 
-  borderConvert(borderType: string, styleType = 1, color = '#000'): any {
+  borderConvert(borderType: string, styleType = 1, color = '#000'): object {
     // corresponding to the luckysheet's borderInfo config
     if (!borderType) return {};
 

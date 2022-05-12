@@ -1,20 +1,17 @@
 import { FileService } from './../../service/fileService.service';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import * as luckysheet from 'luckysheet';
 
-import { fields } from 'src/app/fields';
 import { PairForm } from 'src/app/interface/pairForm';
 import { ValueSyncService } from 'src/app/service/valueSync.service';
-
-// TODO: add the download function
 
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss']
 })
-export class PanelComponent implements OnInit, AfterViewInit {
+export class PanelComponent {
 
   pairForms: PairForm[] = [];
   constructor(private vsService: ValueSyncService, private fileService: FileService) {
@@ -42,7 +39,7 @@ export class PanelComponent implements OnInit, AfterViewInit {
     }, 1000);
   }
 
-  parseXLSX(event: any) {
+  parseXLSX(event: any): void {
     const files = event.target.files;
 
     if (files == null || files.lengh == 0) {
@@ -60,10 +57,11 @@ export class PanelComponent implements OnInit, AfterViewInit {
   }
 
   syncData(): void {
+    // TODO: need to take the sheet name from the user
     const sheet = luckysheet.getSheet("Sheet1");
 
     for (let p of this.pairForms) {
-      if (fields.includes(p.label)) {
+      if (this.vsService.getFields().includes(p.label)) {
 
         let x: number = p.coordinate.x;
         let y: number = p.coordinate.y;
