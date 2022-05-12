@@ -39,7 +39,7 @@ export class PanelComponent implements OnInit, AfterViewInit {
         this.pairForms = pairForms;
         this.vsService.syncLuckySheet(this.pairForms, luckysheet, "Sheet1");
       })
-    }, 200);
+    }, 1000);
   }
 
   parseXLSX(event: any) {
