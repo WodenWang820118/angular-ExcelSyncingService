@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { PairForm } from '../../interface/pairForm';
-import { fields } from 'src/app/fields';
 import { ValueBindingService } from '../../service/valueBinding.service';
 import { ValueSyncService } from 'src/app/service/valueSync.service';
 import { MatTable } from '@angular/material/table';
@@ -15,12 +14,13 @@ export class SettingComponent {
   @ViewChild('table') table!: MatTable<PairForm>;
   selectedField = new FormControl();
   selectedCell = new FormControl();
-  fields: string[] = fields;
+  fields: string[];
   displayedColumns: string[] = ['label', 'cell', 'value'];
   pairForms: PairForm[] = [];
 
   constructor(public vbService: ValueBindingService, private vsService: ValueSyncService) {
     this.vbService.initCharHash();
+    this.fields = this.vbService.getFields();
 
     // retrieve the pairForms from the server at the first time
     this.vsService.getPairFormsFromServer().subscribe(pairForms => {

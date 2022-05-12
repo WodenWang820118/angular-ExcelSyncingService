@@ -7,7 +7,7 @@
         "x": 0,
         "y": 0
       },
-      "value": 5
+      "value": 3
     },
     {
       "label": "maxPackingTime",
@@ -16,7 +16,7 @@
         "x": 0,
         "y": 1
       },
-      "value": 7
+      "value": 1
     },
     {
       "label": "maxPressure",
@@ -25,7 +25,7 @@
         "x": 0,
         "y": 2
       },
-      "value": 9
+      "value": 4
     }
   ]
 }

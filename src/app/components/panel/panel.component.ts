@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 
 import * as luckysheet from 'luckysheet';
 
-import { fields } from 'src/app/fields';
 import { PairForm } from 'src/app/interface/pairForm';
 import { ValueSyncService } from 'src/app/service/valueSync.service';
 
@@ -62,7 +61,7 @@ export class PanelComponent {
     const sheet = luckysheet.getSheet("Sheet1");
 
     for (let p of this.pairForms) {
-      if (fields.includes(p.label)) {
+      if (this.vsService.getFields().includes(p.label)) {
 
         let x: number = p.coordinate.x;
         let y: number = p.coordinate.y;

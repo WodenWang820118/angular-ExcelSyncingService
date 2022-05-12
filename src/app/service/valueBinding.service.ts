@@ -1,6 +1,7 @@
 import { CharHashPair } from '../../app/interface/charHash';
 import { Coordinate } from '../../app/class/Coordinate';
 import { Injectable } from '@angular/core';
+import { fields } from 'src/app/service/fields';
 
 @Injectable({providedIn: 'root'})
 export class ValueBindingService {
@@ -67,5 +68,9 @@ export class ValueBindingService {
 
   getCharHash(): CharHashPair[] {
     return this.charHash;
+  }
+
+  getFields(): string[] {
+    return fields;
   }
 }
