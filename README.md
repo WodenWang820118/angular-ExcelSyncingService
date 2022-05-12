@@ -18,7 +18,10 @@ Specifically, after cell binding, it can:
 - [file-saver](https://www.npmjs.com/package/file-saver) - allow the client side to download the edited Excel file
 
 ## Plan
-- debug corrupted downloaded file (could be fixed by Microsoft 365 for now)
+- debug
+    - uploaded Excel's data doesn't get into the luckysheet array -> should
+    - downloaded Excel cannot be re-uploaded -> should
+    - can sync data without binding -> shouldn't
 - artifacts, including
     - design sequence diagram
 
