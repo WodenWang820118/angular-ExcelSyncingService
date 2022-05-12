@@ -7,7 +7,7 @@
         "x": 0,
         "y": 0
       },
-      "value": 8
+      "value": 5
     },
     {
       "label": "maxPackingTime",
@@ -17,6 +17,15 @@
         "y": 1
       },
       "value": 7
+    },
+    {
+      "label": "maxPressure",
+      "cell": "A3",
+      "coordinate": {
+        "x": 0,
+        "y": 2
+      },
+      "value": 9
     }
   ]
 }

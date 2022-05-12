@@ -12,7 +12,7 @@ export class ValueBindingService {
    * an array of objects for translating letters into numbers
    * for example, "A" equals to 0
    */
-  initCharHash() {
+  initCharHash(): void {
     for (let i = 65; i < 91; i++) {
       this.charHash.push({
         'char': String.fromCharCode(i),
@@ -21,7 +21,7 @@ export class ValueBindingService {
     }
   }
 
-  verifyCell(cell: String): boolean {
+  verifyCell(cell: string): boolean {
     if (cell.length > 4) {
       alert("The cell is limited to A-ZZ columns and the 0-99 number of rows");
       return false;
@@ -38,7 +38,7 @@ export class ValueBindingService {
     return true
   }
 
-  isLetter(char: String) {
+  isLetter(char: string): false | RegExpMatchArray | null {
     return char.length === 1 && char.match(/[A-Z]/i);
   }
 
@@ -47,7 +47,7 @@ export class ValueBindingService {
    * assume that the cell is valid
    * @see verifyCell() for validating the cell
    */
-    convertCellToCoordinate(cell: String): Coordinate {
+    convertCellToCoordinate(cell: string): Coordinate {
     let coordinate: Coordinate = new Coordinate(0, 0);
     let xSum: number = 0;
     let ySum = '';

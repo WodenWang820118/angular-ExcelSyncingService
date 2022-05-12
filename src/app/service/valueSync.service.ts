@@ -26,7 +26,7 @@ export class ValueSyncService {
     });
   }
 
-  setUpdatePairForms(pairForms: PairForm[]) {
+  setUpdatePairForms(pairForms: PairForm[]): void {
     this.pairForms = pairForms;
     this.pairFormsSubject.next(this.pairForms);
 
