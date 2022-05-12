@@ -76,6 +76,10 @@ export class ValueSyncService {
     return this.http.post<PairForm>(this.apiURL, pairForm, httpOptions);
   }
 
+  deletePairForm(pairForm: PairForm): Observable<PairForm> {
+    return this.http.delete<PairForm>(`${this.apiURL}/${pairForm.label}`, httpOptions);
+  }
+
   // syncing service
 
   // since the customForm might be different in each component,
@@ -102,9 +106,9 @@ export class ValueSyncService {
 
   syncLuckySheet(pairForms: PairForm[], luckysheet: any, sheetName: string): void {
     for (let p of pairForms) {
-      let x = p.coordinate.x
-      let y = p.coordinate.y
-      let value = p.value
+      let x = p.coordinate.x;
+      let y = p.coordinate.y;
+      let value = p.value;
       luckysheet.setCellValue(y, x, value, sheetName);
     }   
   }

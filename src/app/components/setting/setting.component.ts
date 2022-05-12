@@ -6,16 +6,13 @@ import { ValueBindingService } from '../../service/valueBinding.service';
 import { ValueSyncService } from 'src/app/service/valueSync.service';
 import { MatTable } from '@angular/material/table';
 
-// TODO: add the delete function in the table
-// reference: https://stackoverflow.com/questions/45183909/edit-delete-button-for-each-row-header-column-is-action-in-the-md-table
-
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.component.html',
   styleUrls: ['./setting.component.scss']
 })
 export class SettingComponent implements OnInit {
-  @ViewChild('table') table!: MatTable<any>;
+  @ViewChild('table') table!: MatTable<PairForm>;
   selectedField = new FormControl();
   selectedCell = new FormControl();
   fields: string[] = fields;
@@ -27,11 +24,7 @@ export class SettingComponent implements OnInit {
 
     // retrieve the pairForms from the server at the first time
     this.vsService.getPairFormsFromServer().subscribe(pairForms => {
-      this.pairForms = pairForms;
-    })
-
-    // subscribe to the changes of the pairForms subject
-    this.vsService.getPairFormsSubject().subscribe(pairForms => {
+      console.log(`update data from the server`);
       this.pairForms = pairForms;
     })
   }
@@ -79,9 +72,25 @@ export class SettingComponent implements OnInit {
   }
 
   addPairFormToServer(newBinding: PairForm): void {
+    console.log(`add the new binding to the server`);
+    // save the new binding to the server
     this.vsService.addPairForm(newBinding)
-      .subscribe(newBinding => {
-        this.table.renderRows();
-      });
+      .subscribe(() => {
+        // push the new binding to the pairForms and re-render rows
+        this.pairForms.push(newBinding);
+        this.table ? this.table.renderRows() : '';
+      }
+    );
+  }
+
+  deleteRow(row: PairForm) {
+    console.log(`Trigger the delete function`);
+    // delete the row from the server
+    this.vsService.deletePairForm(row)
+      .subscribe(() => {
+        // delete the row from the pairForms
+        this.pairForms = this.pairForms.filter(p => p.label !== row.label);
+      }
+    );
   }
 }
