@@ -19,7 +19,6 @@ Specifically, after cell binding, it can:
 
 ## Plan
 - debug corrupted downloaded file (could be fixed by Microsoft 365 for now)
-- `delete` function in the table row
 - artifacts, including
     - domain model diagram
     - design model diagram

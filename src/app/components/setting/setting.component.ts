@@ -27,6 +27,11 @@ export class SettingComponent implements OnInit {
       console.log(`update data from the server`);
       this.pairForms = pairForms;
     })
+
+    this.vsService.getPairFormsSubject().subscribe(pairForms => {
+      console.log(`update data from the table to HTML form`);
+      this.pairForms = pairForms;
+    })
   }
 
   ngOnInit(): void {
