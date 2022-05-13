@@ -1,10 +1,11 @@
-import { FileService } from './../../service/fileService.service';
+import { FileDownloadService } from '../../service/fileDownload.service';
 import { Component } from '@angular/core';
 
 import * as luckysheet from 'luckysheet';
 
 import { PairForm } from 'src/app/interface/pairForm';
 import { ValueSyncService } from 'src/app/service/valueSync.service';
+import { FileUploadService } from 'src/app/service/fileUpload.service';
 
 @Component({
   selector: 'app-panel',
@@ -14,7 +15,9 @@ import { ValueSyncService } from 'src/app/service/valueSync.service';
 export class PanelComponent {
 
   pairForms: PairForm[] = [];
-  constructor(private vsService: ValueSyncService, private fileService: FileService) {
+  constructor(private vsService: ValueSyncService,
+              private fileDownloadService: FileDownloadService,
+              private fileUploadService: FileUploadService) { 
   }
 
   ngOnInit(): void {
@@ -53,7 +56,7 @@ export class PanelComponent {
       alert("Currently only supports the import of xlsx files");
       return;
     }
-    this.fileService.convertExcelToLuckySheet(files[0]);
+    this.fileUploadService.convertExcelToLuckySheet(files[0]);
   }
 
   syncData(): void {
@@ -79,6 +82,6 @@ export class PanelComponent {
   }
 
   downloadExcel(): void {
-    this.fileService.exportExcelData(luckysheet.getLuckysheetfile());
+    this.fileDownloadService.exportExcelData(luckysheet.getLuckysheetfile());
   }
 }
