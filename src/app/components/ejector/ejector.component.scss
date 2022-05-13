@@ -1,0 +1,35 @@
+.ejector {
+
+  &__dashboard {
+    &__title {
+      display: flex;
+      padding-left: 70px;
+
+      :nth-child(1) {
+        margin-right: 130px;
+      }
+
+      :nth-child(2) {
+        margin-right: 140px;
+      }
+    }
+
+    &__set {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    &__section {
+      display: flex;
+    }
+
+    &__item {
+      display: flex;
+      align-items: center;
+    }
+
+    
+  }
+}

@@ -1,0 +1,48 @@
+<div class="ejector">
+  <h3 style="color:#bf3309; font-weight: 500;">Section Number of Ejector Advancement</h3>
+  <mat-form-field [style.width.px]=600 appearance="outline">
+    <mat-label>Select Field</mat-label>
+    <mat-select name="selectedField" required (selectionChange)="getSelection($event)">
+      <mat-option *ngFor="let number of numbers" [value]="number">
+        {{ number }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="ejector__dashboard">
+    <div class="ejector__dashboard__title" *ngIf="sections.value > 0">
+      <h4>Velocity</h4>
+      <h4>Force</h4>
+      <h4>Position</h4>
+    </div>
+    <div class="ejector__dashboard__set" *ngFor="let row of [].constructor(sections); let i=index">
+      <ng-container *ngIf="sections.value > 0">
+        <div>Section {{ i + 1 }}</div>
+        <div class="ejector__dashboard__item">
+          <mat-form-field appearance="fill" [style.width.px]=90>
+            <input matInput type="text" value="50">
+          </mat-form-field>
+          <mat-form-field appearance="fill" [style.width.px]=80>
+            <input matInput type="text" value="mm/sec" disabled>
+          </mat-form-field>
+        </div>
+        <div class="ejector__dashboard__item">
+          <mat-form-field appearance="fill" [style.width.px]=90>
+            <input matInput type="text" value="50">
+          </mat-form-field>
+          <mat-form-field appearance="fill" [style.width.px]=80>
+            <input matInput type="text" value="bar" disabled>
+          </mat-form-field>
+        </div>
+        <div class="ejector__dashboard__item">
+          <mat-form-field appearance="fill" [style.width.px]=90>
+            <input matInput type="text" value="50">
+          </mat-form-field>
+          <mat-form-field appearance="fill" [style.width.px]=80>
+            <input matInput type="text" value="mm" disabled>
+          </mat-form-field>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

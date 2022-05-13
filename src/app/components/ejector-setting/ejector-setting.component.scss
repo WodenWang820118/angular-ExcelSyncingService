@@ -1,0 +1,32 @@
+@import "src/app/app.component.scss";
+
+.ejector-setting {
+  width: 600px;
+
+  &__set {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__save {
+    display: block;
+
+    input[type=submit] {
+      display: none;
+    }
+
+    &__label {
+      @include matInput-label;
+    }
+  }
+
+  &__expansion-panel {
+    margin-bottom: 15px;
+  }
+
+  &__table {
+    width: 100%;
+  }
+}

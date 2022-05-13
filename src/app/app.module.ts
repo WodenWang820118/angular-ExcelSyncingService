@@ -15,6 +15,8 @@ import { FormsComponent } from './components/forms/forms.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
+import { EjectorComponent } from './components/ejector/ejector.component';
+import { EjectorSettingComponent } from './components/ejector-setting/ejector-setting.component';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     PanelComponent,
     SettingComponent,
-    FormsComponent
+    FormsComponent,
+    EjectorComponent,
+    EjectorSettingComponent
   ],
   imports: [
     BrowserModule,
