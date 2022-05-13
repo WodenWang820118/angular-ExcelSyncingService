@@ -1,32 +1,11 @@
 import { Injectable } from "@angular/core";
-import * as luckyexcel from "luckyexcel";
-import * as luckysheet from "luckysheet";
 import * as excel from "exceljs";
 import * as filesaver from "file-saver";
 
 
 @Injectable({providedIn: 'root'})
-export class FileService {
+export class FileDownloadService {
   constructor() { }
-
-  convertExcelToLuckySheet(file: File): void {
-    // reference: https://github.com/mengshukeji/Luckyexcel/blob/master/src/index.html
-    luckyexcel.transformExcelToLucky(file, function(exportJson: any) {
-      if (exportJson.sheets == null || exportJson.sheets.lengh == 0) {
-        alert("Failed to read the content of the excel file, currently does not support xls files!");
-        return;
-      }
-      
-      luckysheet.destroy();
-      luckysheet.create({
-        container: 'luckysheet', //luckysheet is the container id
-        showinfobar: false,
-        data:exportJson.sheets,
-        title:exportJson.info.name,
-        userInfo:exportJson.info.name.creator
-      });
-    })
-  }
 
   // reference: https://blog.csdn.net/csdn_lsy/article/details/107179708
   async exportExcelData(luckysheetFile: any[]): Promise<void> {
@@ -46,6 +25,7 @@ export class FileService {
     });
 
     // FIXME: the file is able to be downloaded, but needs to be fixed by Microsoft 365, style error
+    // FIXME: uploaded file is not able to be downloaded, empty file
     // reference: https://github.com/exceljs/exceljs/issues/354
     await workbook.xlsx.writeBuffer().then(function (data: any) {
       let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
