@@ -1,8 +1,8 @@
+import { EjectorValueSyncService } from './../../service/valueSyncSystem/ejectorValueSync.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
-import { EjectorValueBindingService } from 'src/app/service/ejectorValueBinding.service';
+import { EjectorValueBindingService } from 'src/app/service/valueBindingSystem/ejectorValueBinding.service';
 import { EjectorForm } from 'src/app/interface/ejector';
-import { ValueSyncService } from 'src/app/service/valueSync.service';
 import { MatTable } from '@angular/material/table';
 
 @Component({
@@ -22,18 +22,18 @@ export class EjectorSettingComponent implements OnInit {
   selectedParam = new FormControl();
   id = 0; // temporary number as id attribute
 
-  constructor(public ejService: EjectorValueBindingService, private vsService: ValueSyncService) {
-    this.ejService.initCharHash();
-    this.ejectSections = this.ejService.getEjectSections();
-    this.ejectParams = this.ejService.getEjectorParams();
+  constructor(public ejBindService: EjectorValueBindingService, private ejSyncService: EjectorValueSyncService) {
+    this.ejBindService.initCharHash();
+    this.ejectSections = this.ejSyncService.getEjectSections();
+    this.ejectParams = this.ejSyncService.getEjectorParams();
 
     // retrieve the pairForms from the server at the first time
-    this.vsService.getEjectorFormsFromServer().subscribe(ejectorForms => {
+    this.ejSyncService.ejectorApiService.getEjectorFormsFromServer().subscribe(ejectorForms => {
       this.ejectorForms = ejectorForms;
     })
 
     // subscribe to the changes of the forms subject
-    this.vsService.getEjectorFormsSubject().subscribe(ejectorForms => {
+    this.ejSyncService.getEjectorFormsSubject().subscribe(ejectorForms => {
       this.ejectorForms = ejectorForms;
     })
   }
@@ -46,8 +46,8 @@ export class EjectorSettingComponent implements OnInit {
     let param = f.controls['selectedParam'].value;
     let cell = f.controls['selectedCell'].value;
     this.id += 1;
-    if (this.ejService.verifyCell(cell)) {
-      let coordinate = this.ejService.convertCellToCoordinate(cell);
+    if (this.ejBindService.verifyCell(cell)) {
+      let coordinate = this.ejBindService.convertCellToCoordinate(cell);
       let newBinding: EjectorForm = {
         id: this.id,
         section: section,
@@ -86,7 +86,7 @@ export class EjectorSettingComponent implements OnInit {
   addEjectorFormToServer(newBinding: EjectorForm): void {
     console.log(`add the new binding to the server`);
     // save the new binding to the server
-    this.vsService.addEjectorForm(newBinding)
+    this.ejSyncService.ejectorApiService.addEjectorForm(newBinding)
       .subscribe(() => {
         // push the new binding to the pairForms and re-render rows
         this.ejectorForms.push(newBinding);
@@ -98,7 +98,7 @@ export class EjectorSettingComponent implements OnInit {
   deleteRow(row: EjectorForm): void {
     console.log(`Trigger the delete function`);
     // delete the row from the server
-    this.vsService.deleteEjectorForm(row)
+    this.ejSyncService.ejectorApiService.deleteEjectorForm(row)
       .subscribe(() => {
         // delete the row from the pairForms
         this.ejectorForms = this.ejectorForms.filter(p => p.id !== row.id);

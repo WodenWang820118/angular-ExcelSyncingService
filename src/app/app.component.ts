@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { WindowService } from './service/window.service';
+import { WindowService } from './service/utilities/window.service';
 import * as luckysheet from 'luckysheet';
 
 @Component({
@@ -15,7 +15,6 @@ export class AppComponent implements AfterViewInit {
   ngOnInit(): void {
   }
 
-  // TODO: replace Luckysheet logo and title with custom logo and title
   // TODO: add extra information for styling the luckysheet
   ngAfterViewInit() {
     let nativeWindow = this.windowService.nativeWindow;
