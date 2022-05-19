@@ -27,7 +27,8 @@ export class AppComponent implements AfterViewInit {
   private configureLuckysheet(): void {
     // configuration item
     var options = {
-      container: 'luckysheet' // luckysheet is the container id
+      container: 'luckysheet', // luckysheet is the container id
+      showinfobar: false,
     }
 
     luckysheet.create(options);

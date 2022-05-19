@@ -16,6 +16,9 @@ export class FileUploadService {
         return;
       }
       luckysheet.destroy();
+      
+      // the exportJson does include the sheet data
+      console.log(exportJson);
 
       const options = {
         container: 'luckysheet', //luckysheet is the container id
