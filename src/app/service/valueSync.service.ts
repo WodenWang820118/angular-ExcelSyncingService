@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { PairForm } from "../interface/pairForm";
 import { fields } from "./fields";
+import { EjectorForm } from "../interface/ejector";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -16,10 +17,13 @@ export class ValueSyncService {
 
   private pairForms: PairForm[] = [];
   private pairFormsSubject = new Subject<PairForm[]>();
+  private ejectorFormsSubject = new Subject<EjectorForm[]>();
+  private ejectorFomrs: EjectorForm[] = [];
   private apiURL = 'http://localhost:3000/forms';
 
   constructor(private http: HttpClient) {
     this.pairFormsSubject = new BehaviorSubject<PairForm[]>(this.pairForms);
+    this.ejectorFormsSubject = new BehaviorSubject<EjectorForm[]>(this.ejectorFomrs);
     // get data from the server and enable mocking form to submit the data
     this.getPairFormsFromServer().subscribe(pairForms => {
       this.pairForms = pairForms;
@@ -36,12 +40,29 @@ export class ValueSyncService {
     });
   }
 
+  setUpdateEjectorForms(ejectorForms: EjectorForm[]): void {
+    this.ejectorFomrs = ejectorForms;
+    this.ejectorFormsSubject.next(this.ejectorFomrs);
+
+    this.ejectorFomrs.forEach(ejectorForm => {
+      this.updateEjectorForm(ejectorForm).subscribe();
+    });
+  }
+
   getPairFormsSubject(): Subject<PairForm[]> {
     return this.pairFormsSubject;
   }
 
   getPairForms(): PairForm[] {
     return this.pairForms;
+  }
+
+  getEjectorFormsSubject(): Subject<EjectorForm[]> {
+    return this.ejectorFormsSubject;
+  }
+
+  getEjectorForms(): EjectorForm[] {
+    return this.ejectorFomrs;
   }
 
   getControl(formGroup: FormGroup, controlName: string): AbstractControl | null {
@@ -62,7 +83,7 @@ export class ValueSyncService {
   }
 
   // API CRUD
-
+  // orginal form
   getPairFormsFromServer(): Observable<PairForm[]> {
     return this.http.get<PairForm[]>(this.apiURL);
   }
@@ -78,6 +99,23 @@ export class ValueSyncService {
 
   deletePairForm(pairForm: PairForm): Observable<PairForm> {
     return this.http.delete<PairForm>(`${this.apiURL}/${pairForm.label}`, httpOptions);
+  }
+
+  // ejector form
+  getEjectorFormsFromServer(): Observable<EjectorForm[]> {
+    return this.http.get<EjectorForm[]>(this.apiURL);
+  }
+
+  updateEjectorForm(ejectorForm: EjectorForm): Observable<EjectorForm> {
+    return this.http.put<EjectorForm>(`${this.apiURL}/${ejectorForm.id}`, ejectorForm, httpOptions);
+  }
+
+  addEjectorForm(ejectorForm: EjectorForm): Observable<EjectorForm> {
+    return this.http.post<EjectorForm>(this.apiURL, ejectorForm, httpOptions);
+  }
+
+  deleteEjectorForm(ejectorForm: EjectorForm): Observable<EjectorForm> {
+    return this.http.delete<EjectorForm>(`${this.apiURL}/${ejectorForm.id}`, httpOptions);
   }
 
   // syncing service
@@ -111,6 +149,15 @@ export class ValueSyncService {
       let value = p.value;
       luckysheet.setCellValue(y, x, value, sheetName);
     }   
+  }
+
+  syncLuckySheetWithEjector(ejectorForms: EjectorForm[], luckysheet: any, sheetName: string): void {
+    for (let e of ejectorForms) {
+      let x = e.coordinate.x;
+      let y = e.coordinate.y;
+      let value = e.value;
+      luckysheet.setCellValue(y, x, value, sheetName);
+    }
   }
 
   getFields(): string[] {

@@ -17,6 +17,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
 import { EjectorComponent } from './components/ejector/ejector.component';
 import { EjectorSettingComponent } from './components/ejector-setting/ejector-setting.component';
+import { EjectorPanelComponent } from './components/ejector-panel/ejector-panel.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { EjectorSettingComponent } from './components/ejector-setting/ejector-se
     SettingComponent,
     FormsComponent,
     EjectorComponent,
-    EjectorSettingComponent
+    EjectorSettingComponent,
+    EjectorPanelComponent
   ],
   imports: [
     BrowserModule,

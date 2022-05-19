@@ -1,4 +1,5 @@
 import { FormControl } from "@angular/forms";
+import { Coordinate } from "../class/Coordinate";
 import { PairForm } from "./pairForm";
 
 interface EjectorParams {
@@ -7,7 +8,17 @@ interface EjectorParams {
   "position": PairForm
 }
 
+// export interface EjectorForm {
+//   "section": number,
+//   "form": EjectorParams
+// }
+
+// temporary designed interface for ejector
 export interface EjectorForm {
-  "section": FormControl,
-  "form": EjectorParams
+  "id": number,
+  "section": number,
+  "label": string,
+  "cell": string,
+  "coordinate": Coordinate,
+  "value": number
 }
