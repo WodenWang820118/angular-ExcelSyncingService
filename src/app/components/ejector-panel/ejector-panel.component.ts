@@ -1,10 +1,10 @@
+import { EjectorValueSyncService } from './../../service/valueSyncSystem/ejectorValueSync.service';
 import { Component, OnInit } from '@angular/core';
 
 import * as luckysheet from 'luckysheet';
 
-import { ValueSyncService } from 'src/app/service/valueSync.service';
-import { FileUploadService } from 'src/app/service/fileUpload.service';
-import { FileDownloadService } from '../../service/fileDownload.service';
+import { FileUploadService } from 'src/app/service/utilities/fileUpload.service';
+import { FileDownloadService } from '../../service/utilities/fileDownload.service';
 import { EjectorForm } from 'src/app/interface/ejector';
 
 @Component({
@@ -15,7 +15,7 @@ import { EjectorForm } from 'src/app/interface/ejector';
 export class EjectorPanelComponent implements OnInit {
 
   ejectorForms: EjectorForm[] = [];
-  constructor(private vsService: ValueSyncService,
+  constructor(private ejSyncService: EjectorValueSyncService,
               private fileDownloadService: FileDownloadService,
               private fileUploadService: FileUploadService) { 
   }
@@ -29,14 +29,14 @@ export class EjectorPanelComponent implements OnInit {
 
     setTimeout(() => {
       // retrieve the pairForms from the server at the first time
-      this.vsService.getEjectorFormsFromServer().subscribe(ejectorForms => {
+      this.ejSyncService.ejectorApiService.getEjectorFormsFromServer().subscribe(ejectorForms => {
         this.ejectorForms = ejectorForms;
         // for future usage to birng back the data from the server and update the excel
         // this.vsService.syncLuckySheet(this.ejectorForms, luckysheet, "Sheet1");
       })
   
       // subscribe to the changes of the pairForms subject
-      this.vsService.getEjectorFormsSubject().subscribe(ejectorForms => {
+      this.ejSyncService.getEjectorFormsSubject().subscribe(ejectorForms => {
         this.ejectorForms = ejectorForms;
         // for future usage to birng back the data from the server and update the excel
         // this.vsService.syncLuckySheet(this.ejectorForms, luckysheet, "Sheet1");
@@ -74,7 +74,7 @@ export class EjectorPanelComponent implements OnInit {
     }
     console.log(`Successfully update all the form values`);
     // send the pairForms to the valueSyncService
-    this.vsService.setUpdateEjectorForms(this.ejectorForms);
+    this.ejSyncService.setUpdateEjectorForms(this.ejectorForms);
   }
 
   downloadExcel(): void {

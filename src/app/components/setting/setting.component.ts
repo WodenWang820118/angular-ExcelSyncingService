@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { PairForm } from '../../interface/pairForm';
-import { ValueBindingService } from '../../service/valueBinding.service';
-import { ValueSyncService } from 'src/app/service/valueSync.service';
 import { MatTable } from '@angular/material/table';
+import { PairFormSyncService } from 'src/app/service/valueSyncSystem/pairFormSync.service';
+import { PairFormBindingService } from 'src/app/service/valueBindingSystem/pairFormBinding.service';
 
 @Component({
   selector: 'app-setting',
@@ -18,17 +18,17 @@ export class SettingComponent {
   displayedColumns: string[] = ['label', 'cell', 'value'];
   pairForms: PairForm[] = [];
 
-  constructor(public vbService: ValueBindingService, private vsService: ValueSyncService) {
-    this.vbService.initCharHash();
-    this.fields = this.vbService.getFields();
+  constructor(public pfBindService: PairFormBindingService, private pfSyncService: PairFormSyncService) {
+    this.pfBindService.initCharHash();
+    this.fields = this.pfSyncService.getFields();
 
     // retrieve the pairForms from the server at the first time
-    this.vsService.getPairFormsFromServer().subscribe(pairForms => {
+    this.pfSyncService.pairFormApiService.getPairFormsFromServer().subscribe(pairForms => {
       console.log(`update data from the server`);
       this.pairForms = pairForms;
     })
 
-    this.vsService.getPairFormsSubject().subscribe(pairForms => {
+    this.pfSyncService.getPairFormsSubject().subscribe(pairForms => {
       console.log(`update data from the table to HTML form`);
       this.pairForms = pairForms;
     })
@@ -38,8 +38,8 @@ export class SettingComponent {
     let field = f.controls['selectedField'].value;
     let cell = f.controls['selectedCell'].value;
 
-    if (this.vbService.verifyCell(cell)) {
-      let coordinate = this.vbService.convertCellToCoordinate(cell);
+    if (this.pfBindService.verifyCell(cell)) {
+      let coordinate = this.pfBindService.convertCellToCoordinate(cell);
       let newBinding: PairForm = {
         label: field,
         cell: cell,
@@ -76,7 +76,7 @@ export class SettingComponent {
   addPairFormToServer(newBinding: PairForm): void {
     console.log(`add the new binding to the server`);
     // save the new binding to the server
-    this.vsService.addPairForm(newBinding)
+    this.pfSyncService.pairFormApiService.addPairForm(newBinding)
       .subscribe(() => {
         // push the new binding to the pairForms and re-render rows
         this.pairForms.push(newBinding);
@@ -88,7 +88,7 @@ export class SettingComponent {
   deleteRow(row: PairForm): void {
     console.log(`Trigger the delete function`);
     // delete the row from the server
-    this.vsService.deletePairForm(row)
+    this.pfSyncService.pairFormApiService.deletePairForm(row)
       .subscribe(() => {
         // delete the row from the pairForms
         this.pairForms = this.pairForms.filter(p => p.label !== row.label);

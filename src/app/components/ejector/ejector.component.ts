@@ -1,6 +1,6 @@
+import { EjectorValueSyncService } from './../../service/valueSyncSystem/ejectorValueSync.service';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ValueSyncService } from 'src/app/service/valueSync.service';
 import { EjectorForm } from '../../interface/ejector';
 
 @Component({
@@ -19,9 +19,9 @@ export class EjectorComponent {
   // multiple ejectorForms according to the sections
   ejectorFormGroupArray: FormGroup[] = [];
 
-  constructor(private vsService: ValueSyncService) {
+  constructor(private vsService: EjectorValueSyncService) {
     // retrieve the pairForms from the server at the first time
-    this.vsService.getEjectorFormsFromServer().subscribe(ejectorForms => {
+    this.vsService.ejectorApiService.getEjectorFormsFromServer().subscribe(ejectorForms => {
       this.ejectorForms = ejectorForms;
       this.setEjectorForms(ejectorForms);
     })
