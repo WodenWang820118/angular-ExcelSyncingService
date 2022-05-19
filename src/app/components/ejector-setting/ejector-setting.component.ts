@@ -1,7 +1,7 @@
-import { EjectorValueSyncService } from './../../service/valueSyncSystem/ejectorValueSync.service';
+import { EjectorValueSyncService } from '../../service/valueSyncSystem/ejectorValueSync.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
-import { EjectorValueBindingService } from 'src/app/service/valueBindingSystem/ejectorValueBinding.service';
+import { EjectorValueBindingService } from '../..//service/valueBindingSystem/ejectorValueBinding.service';
 import { EjectorForm } from 'src/app/interface/ejector';
 import { MatTable } from '@angular/material/table';
 

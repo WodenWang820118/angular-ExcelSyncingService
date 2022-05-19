@@ -1,9 +1,9 @@
-import { EjectorValueSyncService } from './../../service/valueSyncSystem/ejectorValueSync.service';
+import { EjectorValueSyncService } from '../../service/valueSyncSystem/ejectorValueSync.service';
 import { Component, OnInit } from '@angular/core';
 
 import * as luckysheet from 'luckysheet';
 
-import { FileUploadService } from 'src/app/service/utilities/fileUpload.service';
+import { FileUploadService } from '../../service/utilities/fileUpload.service';
 import { FileDownloadService } from '../../service/utilities/fileDownload.service';
 import { EjectorForm } from 'src/app/interface/ejector';
 

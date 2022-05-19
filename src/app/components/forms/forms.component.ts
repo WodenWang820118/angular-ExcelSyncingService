@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { PairFormSyncService } from 'src/app/service/valueSyncSystem/pairFormSync.service';
+import { PairFormSyncService } from '../../service/valueSyncSystem/pairFormSync.service';
 
 @Component({
   selector: 'app-forms',

@@ -3,9 +3,9 @@ import { Component } from '@angular/core';
 import * as luckysheet from 'luckysheet';
 
 import { PairForm } from 'src/app/interface/pairForm';
-import { FileUploadService } from 'src/app/service/utilities/fileUpload.service';
+import { FileUploadService } from '../../service/utilities/fileUpload.service';
 import { FileDownloadService } from '../../service/utilities/fileDownload.service';
-import { PairFormSyncService } from 'src/app/service/valueSyncSystem/pairFormSync.service';
+import { PairFormSyncService } from '../../service/valueSyncSystem/pairFormSync.service';
 
 @Component({
   selector: 'app-panel',

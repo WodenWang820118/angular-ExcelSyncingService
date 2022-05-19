@@ -1,4 +1,4 @@
-import { EjectorValueSyncService } from './../../service/valueSyncSystem/ejectorValueSync.service';
+import { EjectorValueSyncService } from '../../service/valueSyncSystem/ejectorValueSync.service';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { EjectorForm } from '../../interface/ejector';
@@ -19,15 +19,15 @@ export class EjectorComponent {
   // multiple ejectorForms according to the sections
   ejectorFormGroupArray: FormGroup[] = [];
 
-  constructor(private vsService: EjectorValueSyncService) {
+  constructor(private ejSyncService: EjectorValueSyncService) {
     // retrieve the pairForms from the server at the first time
-    this.vsService.ejectorApiService.getEjectorFormsFromServer().subscribe(ejectorForms => {
+    this.ejSyncService.ejectorApiService.getEjectorFormsFromServer().subscribe((ejectorForms: EjectorForm[]) => {
       this.ejectorForms = ejectorForms;
       this.setEjectorForms(ejectorForms);
     })
 
     // subscribe to the changes of the forms subject
-    this.vsService.getEjectorFormsSubject().subscribe(ejectorForms => {
+    this.ejSyncService.getEjectorFormsSubject().subscribe((ejectorForms: EjectorForm[]) => {
       this.ejectorForms = ejectorForms;
       this.setEjectorForms(ejectorForms);
     })
@@ -86,17 +86,17 @@ export class EjectorComponent {
       if (formControlSection === 1) {
         switch (formControlName) {
           case 'velocity': {
-            let control = this.vsService.getControl(ejectorFormGroup1, 'velocity');
+            let control = this.ejSyncService.getControl(ejectorFormGroup1, 'velocity');
             (control) ? control.setValue(formControlValue) : null;
             break;
           }
           case 'pressure': {
-            let control = this.vsService.getControl(ejectorFormGroup1, 'pressure');
+            let control = this.ejSyncService.getControl(ejectorFormGroup1, 'pressure');
             (control) ? control.setValue(formControlValue) : null;
             break;
           }
           case 'position': {
-            let control = this.vsService.getControl(ejectorFormGroup1, 'position');
+            let control = this.ejSyncService.getControl(ejectorFormGroup1, 'position');
             (control) ? control.setValue(formControlValue) : null;
             break;
           }
@@ -104,17 +104,17 @@ export class EjectorComponent {
       } else if (formControlSection === 2) {
         switch (formControlName) {
           case 'velocity': {
-            let control = this.vsService.getControl(ejectorFormGroup2, 'velocity');
+            let control = this.ejSyncService.getControl(ejectorFormGroup2, 'velocity');
             (control) ? control.setValue(formControlValue) : null;
             break;
           }
           case 'pressure': {
-            let control = this.vsService.getControl(ejectorFormGroup2, 'pressure');
+            let control = this.ejSyncService.getControl(ejectorFormGroup2, 'pressure');
             (control) ? control.setValue(formControlValue) : null;
             break;
           }
           case 'position': {
-            let control = this.vsService.getControl(ejectorFormGroup2, 'position');
+            let control = this.ejSyncService.getControl(ejectorFormGroup2, 'position');
             (control) ? control.setValue(formControlValue) : null;
             break;
           }
