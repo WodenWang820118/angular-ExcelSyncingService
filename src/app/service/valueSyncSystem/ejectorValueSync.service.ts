@@ -12,19 +12,19 @@ export class EjectorValueSyncService extends ValueSyncService {
   public ejectorApiService: EjectorApiService
 
   private ejectorFormsSubject = new Subject<EjectorForm[]>();
-  private ejectorFomrs: EjectorForm[] = [];
+  private ejectorForms: EjectorForm[] = [];
   
   constructor(ejectorApiService: EjectorApiService) {
     super();
     this.ejectorApiService = ejectorApiService;
-    this.ejectorFormsSubject = new BehaviorSubject<EjectorForm[]>(this.ejectorFomrs);
+    this.ejectorFormsSubject = new BehaviorSubject<EjectorForm[]>(this.ejectorForms);
   }
 
-  setUpdateEjectorForms(ejectorForms: EjectorForm[]): void {
-    this.ejectorFomrs = ejectorForms;
-    this.ejectorFormsSubject.next(this.ejectorFomrs);
+  setUpdateEjectorForms(ejectorForms: EjectorForm[]): void {    
+    this.ejectorForms = ejectorForms;
+    this.ejectorFormsSubject.next(this.ejectorForms);
 
-    this.ejectorFomrs.forEach(ejectorForm => {
+    this.ejectorForms.forEach(ejectorForm => {
       this.ejectorApiService.updateEjectorForm(ejectorForm).subscribe();
     });
   }
@@ -61,27 +61,34 @@ export class EjectorValueSyncService extends ValueSyncService {
       for (let j = 0; j < maxSection; j++) {
         let formGroup = ejectorFormGroupArray[j];
         if (formGroup.controls['section'].value === formControlSection) {
-          switch (formControlName) {
-            case 'velocity': {
-              let control = this.getControl(formGroup, 'velocity');
-              (control) ? control.setValue(formControlValue) : null;
-              break;
-            }
-            case 'pressure': {
-              let control = this.getControl(formGroup, 'pressure');
-              (control) ? control.setValue(formControlValue) : null;
-              break;
-            }
-            case 'position': {
-              let control = this.getControl(formGroup, 'position');
-              (control) ? control.setValue(formControlValue) : null;
-              break;
-            }
-          }
+          this.updateEjectorFormGroup(formGroup, formControlName, formControlValue);
+        } else {
+          // reset the value of the form group if the binding has been changed
+          this.updateEjectorFormGroup(formGroup, formControlName, null);
         }
       }
     }
     return ejectorFormGroupArray;
+  }
+
+  updateEjectorFormGroup(formGroup: FormGroup, formControlName: string, formControlValue: any): void {
+    switch (formControlName) {
+      case 'velocity': {
+        let control = this.getControl(formGroup, 'velocity');
+        (control) ? control.setValue(formControlValue) : null;
+        break;
+      }
+      case 'pressure': {
+        let control = this.getControl(formGroup, 'pressure');
+        (control) ? control.setValue(formControlValue) : null;
+        break;
+      }
+      case 'position': {
+        let control = this.getControl(formGroup, 'position');
+        (control) ? control.setValue(formControlValue) : null;
+        break;
+      }
+    }
   }
 
   syncEjectorForms(ejectorFormGroupArray: FormGroup[], ejectorForms: EjectorForm[]): EjectorForm[] {
@@ -130,6 +137,6 @@ export class EjectorValueSyncService extends ValueSyncService {
   }
 
   getEjectorForms(): EjectorForm[] {
-    return this.ejectorFomrs;
+    return this.ejectorForms;
   }
 }

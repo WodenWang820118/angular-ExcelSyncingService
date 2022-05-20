@@ -101,6 +101,7 @@ export class EjectorSettingComponent implements OnInit {
       .subscribe(() => {
         // delete the row from the pairForms
         this.ejectorForms = this.ejectorForms.filter(p => p.id !== row.id);
+        this.ejSyncService.setUpdateEjectorForms(this.ejectorForms);
       }
     );
   }
