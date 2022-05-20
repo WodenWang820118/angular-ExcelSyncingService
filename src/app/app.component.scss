@@ -1,7 +1,18 @@
 @import "scss/components/_input.scss";
 
-.layout {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 5% 5%;
+.mainpage {
+	padding-top: 5%;
+	&__template {
+		padding-left: 5%;
+		&__group {
+			display: flex;
+			flex-direction: column;
+			margin: 15px 0;
+			align-items: flex-start;
+		}
+
+		&__radio-button {
+			margin: 5px;
+		}
+	}
 }
