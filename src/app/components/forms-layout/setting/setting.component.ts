@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
-import { PairForm } from '../../interface/pairForm';
+import { PairForm } from '../../../interface/pairForm';
 import { MatTable } from '@angular/material/table';
-import { PairFormSyncService } from '../../service/valueSyncSystem/pairFormSync.service';
-import { PairFormBindingService } from '../../service/valueBindingSystem/pairFormBinding.service';
+import { PairFormSyncService } from '../../../service/valueSyncSystem/pairFormSync.service';
+import { PairFormBindingService } from '../../../service/valueBindingSystem/pairFormBinding.service';
 import { IdGeneratorService } from 'src/app/service/idGenerator.service';
 
 @Component({
