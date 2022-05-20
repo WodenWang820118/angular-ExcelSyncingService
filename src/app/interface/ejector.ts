@@ -15,7 +15,7 @@ interface EjectorParams {
 
 // temporary designed interface for ejector
 export interface EjectorForm {
-  "id": number,
+  "id": string,
   "section": number,
   "label": string,
   "cell": string,

@@ -19,7 +19,7 @@ export class PairFormApiService {
   }
 
   updatePairForm(pairForm: PairForm): Observable<PairForm> {
-    return this.http.put<PairForm>(`${this.apiURL}/${pairForm.label}`, pairForm, httpOptions);
+    return this.http.put<PairForm>(`${this.apiURL}/${pairForm.id}`, pairForm, httpOptions);
   }
 
   addPairForm(pairForm: PairForm): Observable<PairForm> {
@@ -28,6 +28,6 @@ export class PairFormApiService {
   }
 
   deletePairForm(pairForm: PairForm): Observable<PairForm> {
-    return this.http.delete<PairForm>(`${this.apiURL}/${pairForm.label}`, httpOptions);
+    return this.http.delete<PairForm>(`${this.apiURL}/${pairForm.id}`, httpOptions);
   }
 }
