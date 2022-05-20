@@ -1,7 +1,7 @@
-import { EjectorValueSyncService } from '../../service/valueSyncSystem/ejectorValueSync.service';
+import { EjectorValueSyncService } from '../../../service/valueSyncSystem/ejectorValueSync.service';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { EjectorForm } from '../../interface/ejector';
+import { EjectorForm } from '../../../interface/ejector';
 
 @Component({
   selector: 'app-ejector',

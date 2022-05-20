@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
-import { PairForm } from '../../interface/pairForm';
+import { PairForm } from '../../../interface/pairForm';
 import { MatTable } from '@angular/material/table';
-import { PairFormSyncService } from '../../service/valueSyncSystem/pairFormSync.service';
-import { PairFormBindingService } from '../../service/valueBindingSystem/pairFormBinding.service';
+import { PairFormSyncService } from '../../../service/valueSyncSystem/pairFormSync.service';
+import { PairFormBindingService } from '../../../service/valueBindingSystem/pairFormBinding.service';
+import { IdGeneratorService } from 'src/app/service/idGenerator.service';
 
 @Component({
   selector: 'app-setting',
@@ -18,7 +19,9 @@ export class SettingComponent {
   displayedColumns: string[] = ['label', 'cell', 'value'];
   pairForms: PairForm[] = [];
 
-  constructor(public pfBindService: PairFormBindingService, private pfSyncService: PairFormSyncService) {
+  constructor(public pfBindService: PairFormBindingService,
+              private pfSyncService: PairFormSyncService,
+              private idGenerator: IdGeneratorService) {
     this.pfBindService.initCharHash();
     this.fields = this.pfSyncService.getFields();
 
@@ -41,6 +44,7 @@ export class SettingComponent {
     if (this.pfBindService.verifyCell(cell)) {
       let coordinate = this.pfBindService.convertCellToCoordinate(cell);
       let newBinding: PairForm = {
+        id: this.idGenerator.getUniqueId(),
         label: field,
         cell: cell,
         coordinate: coordinate,

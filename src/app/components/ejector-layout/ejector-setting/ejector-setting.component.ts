@@ -1,9 +1,10 @@
-import { EjectorValueSyncService } from '../../service/valueSyncSystem/ejectorValueSync.service';
+import { EjectorValueSyncService } from '../../../service/valueSyncSystem/ejectorValueSync.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
-import { EjectorValueBindingService } from '../..//service/valueBindingSystem/ejectorValueBinding.service';
+import { EjectorValueBindingService } from '../../../service/valueBindingSystem/ejectorValueBinding.service';
 import { EjectorForm } from 'src/app/interface/ejector';
 import { MatTable } from '@angular/material/table';
+import { IdGeneratorService } from 'src/app/service/idGenerator.service';
 
 @Component({
   selector: 'app-ejector-setting',
@@ -19,9 +20,10 @@ export class EjectorSettingComponent implements OnInit {
   ejectorForms: EjectorForm[] = [];
   selectedSection = new FormControl();
   selectedParam = new FormControl();
-  id = 0; // temporary number as id attribute
 
-  constructor(public ejBindService: EjectorValueBindingService, private ejSyncService: EjectorValueSyncService) {
+  constructor(public ejBindService: EjectorValueBindingService,
+              private ejSyncService: EjectorValueSyncService,
+              private idGenerator: IdGeneratorService) {
     this.ejBindService.initCharHash();
     this.ejectSections = this.ejSyncService.getEjectSections();
     this.ejectParams = this.ejSyncService.getEjectorParams();
@@ -44,11 +46,10 @@ export class EjectorSettingComponent implements OnInit {
     let section = f.controls['selectedSection'].value;
     let param = f.controls['selectedParam'].value;
     let cell = f.controls['selectedCell'].value;
-    this.id += 1;
     if (this.ejBindService.verifyCell(cell)) {
       let coordinate = this.ejBindService.convertCellToCoordinate(cell);
       let newBinding: EjectorForm = {
-        id: this.id,
+        id: this.idGenerator.getUniqueId(),
         section: section,
         label: param,
         cell: cell,
