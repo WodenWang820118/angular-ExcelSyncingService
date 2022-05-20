@@ -17,7 +17,6 @@ export class EjectorSettingComponent implements OnInit {
   ejectParams: string[];
   displayedColumns: string[] = ['section', 'label', 'cell', 'value'];
   ejectorForms: EjectorForm[] = [];
-  // binding ngForm
   selectedSection = new FormControl();
   selectedParam = new FormControl();
   id = 0; // temporary number as id attribute

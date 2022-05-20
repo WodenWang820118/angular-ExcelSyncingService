@@ -10,26 +10,40 @@ import { EjectorForm } from '../../interface/ejector';
 })
 export class EjectorComponent {
 
-  // default sections to be 0
   numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  maxSection = this.numbers[this.numbers.length - 1];
   sections: FormControl = new FormControl(0);
-  // a form group to hold the form controls
   ejectorForms: EjectorForm[] = []; // primitive forms to save the binding info
-  
-  // multiple ejectorForms according to the sections
-  ejectorFormGroupArray: FormGroup[] = [];
+  ejectorFormGroupArray: FormGroup[] = []; // multiple ejectorForms according to the sections
 
-  constructor(private ejSyncService: EjectorValueSyncService) {
+  constructor(public ejSyncService: EjectorValueSyncService) {
+    this.ejectorFormGroupArray = ejSyncService.initializeFormGroupArray(this.maxSection);
+
     // retrieve the pairForms from the server at the first time
-    this.ejSyncService.ejectorApiService.getEjectorFormsFromServer().subscribe((ejectorForms: EjectorForm[]) => {
-      this.ejectorForms = ejectorForms;
-      this.setEjectorForms(ejectorForms);
+    this.ejSyncService.ejectorApiService
+      .getEjectorFormsFromServer()
+      .subscribe((ejectorForms: EjectorForm[]) => {
+        this.ejectorForms = ejectorForms;
+
+        this.ejectorFormGroupArray = this.ejSyncService
+          .setEjectorForms(
+            ejectorForms,
+            this.ejectorFormGroupArray,
+            this.maxSection
+          );
     })
 
     // subscribe to the changes of the forms subject
-    this.ejSyncService.getEjectorFormsSubject().subscribe((ejectorForms: EjectorForm[]) => {
-      this.ejectorForms = ejectorForms;
-      this.setEjectorForms(ejectorForms);
+    this.ejSyncService
+      .getEjectorFormsSubject()
+      .subscribe((ejectorForms: EjectorForm[]) => {
+        this.ejectorForms = ejectorForms;
+        this.ejectorFormGroupArray = this.ejSyncService
+          .setEjectorForms(
+            ejectorForms,
+            this.ejectorFormGroupArray,
+            this.maxSection
+          );
     })
   }
 
@@ -41,121 +55,4 @@ export class EjectorComponent {
   udpateSections(newValue: number): void {
     this.sections.setValue(newValue);
   }
-
-  initializeFormGroupArray(sections: number) {
-    this.ejectorFormGroupArray = [];
-    for (let i = 0; i < sections; i++) {
-      this.ejectorFormGroupArray.push(new FormGroup({
-        section: new FormControl(null),
-        velocity: new FormControl(null),
-        pressure: new FormControl(null),
-        position: new FormControl(null)
-      }));
-    }
-  }
-
-  // TODO: need to refactor the code according the real usage
-  setEjectorForms(ejectorForms: EjectorForm[]): FormGroup[] {
-    // reset the ejectorFormGroupArray and ready to be re-filled
-    if (ejectorForms.length > 0) {
-      this.ejectorFormGroupArray = [];
-    }
-
-    // initialize the form group each time
-    // TODO: refactor to be more general, not just for two sections
-    let ejectorFormGroup1: FormGroup = new FormGroup({
-      section: new FormControl(null),
-      velocity: new FormControl(null),
-      pressure: new FormControl(null),
-      position: new FormControl(null)
-    });
-
-    let ejectorFormGroup2: FormGroup = new FormGroup({
-      section: new FormControl(null),
-      velocity: new FormControl(null),
-      pressure: new FormControl(null),
-      position: new FormControl(null)
-    });
-    
-    for (let i = 0; i < ejectorForms.length; i++) {
-      // according to the section and label, set the value of the form group
-      let formControlSection = ejectorForms[i].section;
-      let formControlName = ejectorForms[i].label;
-      let formControlValue = ejectorForms[i].value;
-      
-      if (formControlSection === 1) {
-        switch (formControlName) {
-          case 'velocity': {
-            let control = this.ejSyncService.getControl(ejectorFormGroup1, 'velocity');
-            (control) ? control.setValue(formControlValue) : null;
-            break;
-          }
-          case 'pressure': {
-            let control = this.ejSyncService.getControl(ejectorFormGroup1, 'pressure');
-            (control) ? control.setValue(formControlValue) : null;
-            break;
-          }
-          case 'position': {
-            let control = this.ejSyncService.getControl(ejectorFormGroup1, 'position');
-            (control) ? control.setValue(formControlValue) : null;
-            break;
-          }
-        }
-      } else if (formControlSection === 2) {
-        switch (formControlName) {
-          case 'velocity': {
-            let control = this.ejSyncService.getControl(ejectorFormGroup2, 'velocity');
-            (control) ? control.setValue(formControlValue) : null;
-            break;
-          }
-          case 'pressure': {
-            let control = this.ejSyncService.getControl(ejectorFormGroup2, 'pressure');
-            (control) ? control.setValue(formControlValue) : null;
-            break;
-          }
-          case 'position': {
-            let control = this.ejSyncService.getControl(ejectorFormGroup2, 'position');
-            (control) ? control.setValue(formControlValue) : null;
-            break;
-          }
-        }
-      }
-    }
-    this.ejectorFormGroupArray.push(ejectorFormGroup1);
-    this.ejectorFormGroupArray.push(ejectorFormGroup2);
-    return this.ejectorFormGroupArray;
-  }
-
-  syncEjectorForms(ejectorFormGroupArray: FormGroup[]) {
-    for (let formGroup of ejectorFormGroupArray) {
-      let section = this.getSectionControl(formGroup);
-      let velocity = this.getVelocityControl(formGroup);
-      let pressure = this.getPressureControl(formGroup);
-      let position = this.getPositionControl(formGroup);
-      // update the value of the form group
-      let ejectorForm = this.ejectorForms.find(ejectorForm => ejectorForm.section === section.value);
-      if (ejectorForm) {
-        ejectorForm['label'] === 'velocity' ? ejectorForm['value'] = velocity.value : null;
-        ejectorForm['label'] === 'pressure' ? ejectorForm['value'] = pressure.value : null;
-        ejectorForm['label'] === 'position' ? ejectorForm['value'] = position.value : null;
-      }
-    }
-  }
-
-  getSectionControl(formGroup: FormGroup): FormControl {
-    return formGroup.controls['section'] as FormControl;
-  }
-
-  getVelocityControl(formGroup: FormGroup): FormControl {
-    return formGroup.controls['velocity'] as FormControl;
-  }
-
-  getPressureControl(formGroup: FormGroup): FormControl {
-    return formGroup.controls['pressure'] as FormControl;
-  }
-
-  getPositionControl(formGroup: FormGroup): FormControl {
-    return formGroup.controls['position'] as FormControl;
-  }
-
 }
