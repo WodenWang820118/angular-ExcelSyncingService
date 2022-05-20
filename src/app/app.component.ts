@@ -1,35 +1,30 @@
-import { AfterViewInit, Component } from '@angular/core';
-import { WindowService } from './service/utilities/window.service';
-import * as luckysheet from 'luckysheet';
+import { Component } from '@angular/core';
+import { Router, Event, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent {
   title = 'angular-Excel';
+  selectedTemplate: string = '';
+  currentRoute: string = '';
+  templates: string[] = ['ejector', 'forms'];
 
-  constructor(private windowService: WindowService) {}
-
-  ngOnInit(): void {
-  }
-
-  // TODO: add extra information for styling the luckysheet
-  ngAfterViewInit() {
-    let nativeWindow = this.windowService.nativeWindow;
-    nativeWindow.$(() => {
-      this.configureLuckysheet();
+  constructor(private router: Router) {
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        if (event.url === '/') {
+          this.selectedTemplate = 'ejector';
+          this.router.navigate(['/','ejector']);
+        }
+      }
     })
   }
 
-  private configureLuckysheet(): void {
-    // configuration item
-    var options = {
-      container: 'luckysheet', // luckysheet is the container id
-      showinfobar: false,
-    }
-
-    luckysheet.create(options);
+  onTemplateChange(template: string) {
+    console.log(template);
+    this.router.navigate(['/', template]);
   }
 }

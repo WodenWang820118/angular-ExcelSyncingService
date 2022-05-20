@@ -18,6 +18,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { EjectorComponent } from './components/ejector/ejector.component';
 import { EjectorSettingComponent } from './components/ejector-setting/ejector-setting.component';
 import { EjectorPanelComponent } from './components/ejector-panel/ejector-panel.component';
+import { EjectorLayoutComponent } from './components/ejector-layout/ejector-layout.component';
+import { FormsLayoutComponent } from './components/forms-layout/forms-layout.component';
+import { MatRadioModule } from '@angular/material/radio';
 
 
 @NgModule({
@@ -28,7 +31,9 @@ import { EjectorPanelComponent } from './components/ejector-panel/ejector-panel.
     FormsComponent,
     EjectorComponent,
     EjectorSettingComponent,
-    EjectorPanelComponent
+    EjectorPanelComponent,
+    EjectorLayoutComponent,
+    FormsLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +47,8 @@ import { EjectorPanelComponent } from './components/ejector-panel/ejector-panel.
     MatButtonModule,
     MatTableModule,
     MatExpansionModule,
-    HttpClientModule
+    HttpClientModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

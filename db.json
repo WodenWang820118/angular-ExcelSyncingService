@@ -1,37 +1,5 @@
 {
   "forms": [
-    {
-      "id": 1,
-      "section": 1,
-      "label": "velocity",
-      "cell": "S14",
-      "coordinate": {
-        "x": 18,
-        "y": 13
-      },
-      "value": 300
-    },
-    {
-      "id": 2,
-      "section": 1,
-      "label": "pressure",
-      "cell": "S15",
-      "coordinate": {
-        "x": 18,
-        "y": 14
-      },
-      "value": 200
-    },
-    {
-      "id": 3,
-      "section": 1,
-      "label": "position",
-      "cell": "S16",
-      "coordinate": {
-        "x": 18,
-        "y": 15
-      },
-      "value": 300
-    }
+    
   ]
 }
