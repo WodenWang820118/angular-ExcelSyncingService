@@ -92,6 +92,7 @@ export class SettingComponent {
       .subscribe(() => {
         // delete the row from the pairForms
         this.pairForms = this.pairForms.filter(p => p.label !== row.label);
+        this.pfSyncService.setUpdatePairForms(this.pairForms);
       }
     );
   }
