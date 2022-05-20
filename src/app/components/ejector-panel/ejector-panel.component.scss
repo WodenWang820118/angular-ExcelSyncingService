@@ -2,7 +2,6 @@
 
 .panel {
   width:900px;
-  padding: 0% 3%;
   
   &__tools {
     display: flex;
@@ -42,7 +41,7 @@
   display: inline-block;
   position: relative;
   // must specify the height and width
-  width:800px;
+  width:850px;
   height: 800px;
   margin: 2% 0;
   padding: 0px;
