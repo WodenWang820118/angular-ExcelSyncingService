@@ -1,5 +1,5 @@
-import { CharHashPair } from '../../interface/charHash';
-import { Coordinate } from '../../class/Coordinate';
+import { CharHashPair } from '../interface/charHash';
+import { Coordinate } from '../class/Coordinate';
 import { Injectable } from '@angular/core';
 
 @Injectable({providedIn: 'root'})

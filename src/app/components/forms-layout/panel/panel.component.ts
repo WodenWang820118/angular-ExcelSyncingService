@@ -3,9 +3,9 @@ import { Component } from '@angular/core';
 import * as luckysheet from 'luckysheet';
 
 import { PairForm } from 'src/app/interface/pairForm';
-import { FileUploadService } from '../../../service/utilities/fileUpload.service';
-import { FileDownloadService } from '../../../service/utilities/fileDownload.service';
-import { PairFormSyncService } from '../../../service/valueSyncSystem/pairFormSync.service';
+import { ExcelFileUploadService } from '../../../utilities/ExcelFileUpload.service';
+import { ExcelFileDownloadService } from '../../../utilities/ExcelFileDownload.service';
+import { PairFormSyncService } from '../../../service/PairFormService/PairFormSync.service';
 
 @Component({
   selector: 'app-panel',
@@ -16,8 +16,8 @@ export class PanelComponent {
 
   pairForms: PairForm[] = [];
   constructor(private pfSyncService: PairFormSyncService,
-              private fileDownloadService: FileDownloadService,
-              private fileUploadService: FileUploadService) { 
+              private fileDownloadService: ExcelFileDownloadService,
+              private fileUploadService: ExcelFileUploadService) { 
   }
 
   ngOnInit(): void {

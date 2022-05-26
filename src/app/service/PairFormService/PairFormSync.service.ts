@@ -1,10 +1,10 @@
-import { ValueSyncService } from './valueSync.service';
+import { ValueSyncService } from '../ValueSync.service';
 import { Injectable } from "@angular/core";
 import { PairForm } from 'src/app/interface/pairForm';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { fields } from '../properties/fields';
-import { PairFormApiService } from '../api/pairFormApi.service';
+import { fields } from './Properties/fields';
+import { PairFormApiService } from './PairFormApi.service';
 
 @Injectable({providedIn: 'root'})
 export class PairFormSyncService extends ValueSyncService {

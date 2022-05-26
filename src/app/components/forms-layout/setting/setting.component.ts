@@ -2,9 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { PairForm } from '../../../interface/pairForm';
 import { MatTable } from '@angular/material/table';
-import { PairFormSyncService } from '../../../service/valueSyncSystem/pairFormSync.service';
-import { PairFormBindingService } from '../../../service/valueBindingSystem/pairFormBinding.service';
-import { IdGeneratorService } from 'src/app/service/idGenerator.service';
+import { PairFormSyncService } from '../../../service/PairFormService/PairFormSync.service';
+import { PairFormBindingService } from '../../../service/PairFormService/PairFormBinding.service';
+import { IdGeneratorService } from 'src/app/service/IdGenerator.service';
 
 @Component({
   selector: 'app-setting',

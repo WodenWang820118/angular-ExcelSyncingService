@@ -4,7 +4,7 @@ import * as filesaver from "file-saver";
 
 
 @Injectable({providedIn: 'root'})
-export class FileDownloadService {
+export class ExcelFileDownloadService {
   constructor() { }
 
   // reference: https://blog.csdn.net/csdn_lsy/article/details/107179708

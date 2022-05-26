@@ -1,10 +1,10 @@
-import { EjectorValueSyncService } from '../../../service/valueSyncSystem/ejectorValueSync.service';
+import { EjectorValueSyncService } from '../../../service/EjectorService/ejectorValueSync.service';
 import { Component, OnInit } from '@angular/core';
 
 import * as luckysheet from 'luckysheet';
 
-import { FileUploadService } from '../../../service/utilities/fileUpload.service';
-import { FileDownloadService } from '../../../service/utilities/fileDownload.service';
+import { ExcelFileUploadService } from '../../../utilities/ExcelFileUpload.service';
+import { ExcelFileDownloadService } from '../../../utilities/ExcelFileDownload.service';
 import { EjectorForm } from 'src/app/interface/ejector';
 
 @Component({
@@ -16,8 +16,8 @@ export class EjectorPanelComponent implements OnInit {
 
   ejectorForms: EjectorForm[] = [];
   constructor(private ejSyncService: EjectorValueSyncService,
-              private fileDownloadService: FileDownloadService,
-              private fileUploadService: FileUploadService) { 
+              private fileDownloadService: ExcelFileDownloadService,
+              private fileUploadService: ExcelFileUploadService) { 
   }
 
   ngOnInit(): void {
