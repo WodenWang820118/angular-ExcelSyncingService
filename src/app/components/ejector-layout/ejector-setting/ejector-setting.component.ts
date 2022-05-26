@@ -1,10 +1,10 @@
-import { EjectorValueSyncService } from '../../../service/valueSyncSystem/ejectorValueSync.service';
+import { EjectorValueSyncService } from '../../../service/EjectorService/ejectorValueSync.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
-import { EjectorValueBindingService } from '../../../service/valueBindingSystem/ejectorValueBinding.service';
+import { EjectorValueBindingService } from '../../../service/EjectorService/EjectorValueBinding.service';
 import { EjectorForm } from 'src/app/interface/ejector';
 import { MatTable } from '@angular/material/table';
-import { IdGeneratorService } from 'src/app/service/idGenerator.service';
+import { IdGeneratorService } from 'src/app/service/IdGenerator.service';
 
 @Component({
   selector: 'app-ejector-setting',

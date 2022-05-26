@@ -3,12 +3,11 @@ import * as luckyexcel from "luckyexcel";
 import * as luckysheet from "luckysheet";
 
 @Injectable({providedIn: 'root'})
-export class FileUploadService {
+export class ExcelFileUploadService {
   constructor() { }
 
   convertExcelToLuckySheet(file: File): void {
     // reference: https://github.com/mengshukeji/Luckyexcel/blob/master/src/index.html
-    // FIXME: the uploaded file's data is not imported in the luckysheet
     
     luckyexcel.transformExcelToLucky(file, function(exportJson: any, luckysheetFile: any) {
       if (exportJson.sheets == null || exportJson.sheets.lengh == 0) {

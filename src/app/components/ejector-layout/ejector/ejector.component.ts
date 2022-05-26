@@ -1,4 +1,4 @@
-import { EjectorValueSyncService } from '../../../service/valueSyncSystem/ejectorValueSync.service';
+import { EjectorValueSyncService } from '../../../service/EjectorService/ejectorValueSync.service';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { EjectorForm } from '../../../interface/ejector';

@@ -1,9 +1,9 @@
-import { ValueSyncService } from './valueSync.service';
-import { EjectorApiService } from './../api/ejectorApi.service';
+import { ValueSyncService } from '../ValueSync.service';
+import { EjectorApiService } from './EjectorApi.service';
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Subject } from 'rxjs';
 import { EjectorForm } from 'src/app/interface/ejector';
-import { ejectorParams, ejectSections } from '../properties/ejector';
+import { ejectorParams, ejectSections } from './Properties/ejector';
 import { FormControl, FormGroup } from '@angular/forms';
 
 
