@@ -2,8 +2,8 @@
   <h3 style="color:#bf3309; font-weight: 500;">Section Number of Ejector Advancement</h3>
   <mat-form-field [style.width.px]=600 appearance="outline">
     <mat-label>Select Field</mat-label>
-    <mat-select name="selectedField" required (selectionChange)="getSelection($event)">
-      <mat-option *ngFor="let number of numbers" [value]="number">
+    <mat-select data-testid="eject-form-section-dropdown" name="selectedField" required (selectionChange)="getSelection($event)">
+      <mat-option data-testid="eject-form-section-value" *ngFor="let number of numbers" [value]="number">
         {{ number }}
       </mat-option>
     </mat-select>
