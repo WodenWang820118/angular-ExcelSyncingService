@@ -3,6 +3,6 @@
   "include": ["**/*.ts", "index.d.ts"],
   "compilerOptions": {
     "sourceMap": false,
-    "types": ["node"]
+    "types": ["cypress"]
   }
 }

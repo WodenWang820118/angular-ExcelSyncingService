@@ -1,12 +1,12 @@
 import { EjectorValueBindingService } from '../../src/app/service/EjectorService/EjectorValueBinding.service';
-import * as luckysheet from "luckysheet";
+// import * as luckysheet from "luckysheet";
 
 describe('Luckysheet synchronization operation', () => {
-  it('Selects section 1', () => {
+  it('Successfully enter the website', () => {
     cy.visit('/');
   });
 
-  it('binds the section one, other two fields', () => {
+  it('binds the section one with all fields', () => {
     // section 1
     // vbind the velocity field
     cy.wait(1000);
@@ -81,9 +81,7 @@ describe('Luckysheet synchronization operation', () => {
 
   it('values according to the cell position translates to the right coordinates', () => {
     let service = new EjectorValueBindingService();
-
-    service.initCharHash();
-
+    
     let coordinate = service.convertCellToCoordinate('S14');
     expect(coordinate.x).to.equal(18);
     expect(coordinate.y).to.equal(13);
@@ -105,29 +103,29 @@ describe('Luckysheet synchronization operation', () => {
     expect(coordinate6.y).to.equal(15);
   });
 
-  it('fills the specified values to the luckysheet', () => {
-    let service = new EjectorValueBindingService();
+  // it('fills the specified values to the luckysheet', () => {
+  //   let service = new EjectorValueBindingService();
 
-    service.initCharHash();
+  //   // service.initCharHash();
 
-    let coordinate = service.convertCellToCoordinate('S15');
-    luckysheet.setCellValue(coordinate.y, coordinate.x, '80', 'sheet1');
+  //   let coordinate = service.convertCellToCoordinate('S15');
+  //   luckysheet.setCellValue(coordinate.y, coordinate.x, '80', 'sheet1');
   
-    let coordinate2 = service.convertCellToCoordinate('S15');
-    luckysheet.setCellValue(coordinate2.y, coordinate2.x, '20', 'sheet1');
+  //   let coordinate2 = service.convertCellToCoordinate('S15');
+  //   luckysheet.setCellValue(coordinate2.y, coordinate2.x, '20', 'sheet1');
 
-    let coordinate3 = service.convertCellToCoordinate('S16');
-    luckysheet.setCellValue(coordinate3.y, coordinate3.x, '200', 'sheet1');
+  //   let coordinate3 = service.convertCellToCoordinate('S16');
+  //   luckysheet.setCellValue(coordinate3.y, coordinate3.x, '200', 'sheet1');
 
-    let coordinate4 = service.convertCellToCoordinate('U14');
-    luckysheet.setCellValue(coordinate4.y, coordinate4.x, '100', 'sheet1');
+  //   let coordinate4 = service.convertCellToCoordinate('U14');
+  //   luckysheet.setCellValue(coordinate4.y, coordinate4.x, '100', 'sheet1');
 
-    let coordinate5 = service.convertCellToCoordinate('U15');
-    luckysheet.setCellValue(coordinate5.y, coordinate5.x, '200', 'sheet1');
+  //   let coordinate5 = service.convertCellToCoordinate('U15');
+  //   luckysheet.setCellValue(coordinate5.y, coordinate5.x, '200', 'sheet1');
 
-    let coordinate6 = service.convertCellToCoordinate('U16');
-    luckysheet.setCellValue(coordinate6.y, coordinate6.x, '300', 'sheet1');
-  });
+  //   let coordinate6 = service.convertCellToCoordinate('U16');
+  //   luckysheet.setCellValue(coordinate6.y, coordinate6.x, '300', 'sheet1');
+  // });
 
   // it('selects the desired sections, and show the values', () => {
   //   cy.get('[data-testid="eject-form-section-dropdown"]').click();

@@ -6,7 +6,9 @@ import { Injectable } from '@angular/core';
 export abstract class ValueBindingService {
   private charHash: CharHashPair[] = [];
 
-  constructor() { }
+  constructor() {
+    this.initCharHash();
+  }
 
   /**
    * an array of objects for translating letters into numbers
