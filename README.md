@@ -20,9 +20,9 @@ Specifically, after cell binding, it can:
 
 ## Plan
 - debug
-    - downloaded Excel styling problem
+    - downloaded Excel styling problem (in progress)
 - testing
-    - Cypress end-to-end testing to ensure consistent behaviors
+    - Cypress end-to-end testing to ensure consistent behaviors (in progress)
 
 
 ## Angular CLI version
@@ -36,3 +36,6 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ## Json-server
 
 The mock server uses the uuid `id` as unique ids, use `json-server db.json --id id` to set `id` as id field.
+
+## Software Architecture
+Please see software artifacts to understand how it is designed. The design used the SOA (service-oriented architecture) to reduce the potential duplicate code.
