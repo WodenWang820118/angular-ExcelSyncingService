@@ -1,5 +1,5 @@
 import { EjectorValueSyncService } from '../../../service/EjectorService/ejectorValueSync.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { EjectorValueBindingService } from '../../../service/EjectorService/EjectorValueBinding.service';
 import { EjectorForm } from 'src/app/interface/ejector';
@@ -14,6 +14,7 @@ import { IdGeneratorService } from 'src/app/service/IdGenerator.service';
 export class EjectorSettingComponent implements OnInit {
 
   @ViewChild('table') table!: MatTable<EjectorForm>
+  @ViewChild('cell') cell!: ElementRef;
   ejectSections: number[];
   ejectParams: string[];
   displayedColumns: string[] = ['section', 'label', 'cell', 'value'];
@@ -64,26 +65,27 @@ export class EjectorSettingComponent implements OnInit {
   }
   
   saveBindingInfo(newBinding: EjectorForm): void {
-    if (this.ejectorForms.length === 0) {
+    if (!this.checkEjectorFormFilled(newBinding)) {
+      console.log(`the form is not filled`);
+      return;
+    } else if (this.ejectorForms.length === 0) {
       this.addEjectorFormToServer(newBinding);
     } else {
       for (let p of this.ejectorForms) {
         // won't save the data with the same section and the same label; section should be unique
         if (p.section === newBinding.section && p.label === newBinding.label) {
-          return
-        } else if (p.section !== newBinding.section && p.label === newBinding.label && p.cell !== newBinding.cell) {
-          p.cell = newBinding.cell;
-          return
+          console.log(`the section and the label are already existed`);
+          return;
         } else {
           // different section, label, and cell
           this.addEjectorFormToServer(newBinding);
-          return
+          return;
         }
       }
     }
   }
 
-  addEjectorFormToServer(newBinding: EjectorForm): void {
+  addEjectorFormToServer(newBinding: EjectorForm): void { 
     console.log(`add the new binding to the server`);
     // save the new binding to the server
     this.ejSyncService.ejectorApiService.addEjectorForm(newBinding)
@@ -107,4 +109,41 @@ export class EjectorSettingComponent implements OnInit {
     );
   }
 
+  clearField(): void {
+    this.cell.nativeElement.value = '';
+  }
+
+  validateForm(f: NgForm): void {
+    if (f.controls['selectedSection'].value === '') {
+      f.controls['selectedSection'].setErrors({
+        required: true
+      });
+    }
+    if (f.controls['selectedParam'].value === '') {
+      f.controls['selectedParam'].setErrors({
+        required: true
+      });
+    }
+    if (f.controls['selectedCell'].value === '') {
+      f.controls['selectedCell'].setErrors({
+        required: true
+      });
+    }
+    return;
+  }
+
+  checkEjectorFormFilled(newBinding: EjectorForm): boolean {
+    // console.log(`check the empty field`);
+    let filled = false;
+    Object.keys(newBinding).forEach(key => {
+      // console.log(`${key}: ${(newBinding as any)[key]}`);
+      if ((newBinding as any)[key] === '') {
+        // console.log(`${key} is empty`);
+        filled = false;
+      }
+    });
+    console.log(filled);
+    filled = true;
+    return filled;
+  }
 }
