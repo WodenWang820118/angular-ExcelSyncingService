@@ -4,7 +4,7 @@ import * as filesaver from "file-saver";
 
 
 @Injectable({providedIn: 'root'})
-export class FileDownloadService {
+export class ExcelFileDownloadService {
   constructor() { }
 
   // reference: https://blog.csdn.net/csdn_lsy/article/details/107179708
@@ -71,7 +71,7 @@ export class FileDownloadService {
     return fill;
   }
 
-  fontConvert(ff = 0, fc = '#000000', bl = 0, it = 0, fs = 10, cl = 0, ul = 0): object {
+  fontConvert(ff = 0, fc = '#000000', bl = 0, it = 0, fs = 12, cl = 0, ul = 0): object {
 
     function isfontStyled(fontIdx: number): boolean {
       return fontIdx === 0 ? false : true;
@@ -79,15 +79,15 @@ export class FileDownloadService {
 
     // type declaration: font
     const luckyToExcelFont: { [key: number]: any } = {}
-    luckyToExcelFont[0] = '微软雅黑'
-    luckyToExcelFont[1] = '宋体 (Song)'
-    luckyToExcelFont[2] = '黑体 (ST Heiti)'
-    luckyToExcelFont[3] = '楷体 (ST KaiTi)'
-    luckyToExcelFont[4] = '仿宋 (ST Fangsong)'
-    luckyToExcelFont[5] = '新宋体 (ST Song)'
-    luckyToExcelFont[6] = '华文新魏'
-    luckyToExcelFont[7] = '华文行楷'
-    luckyToExcelFont[8] = '华文隶书'
+    luckyToExcelFont[0] = '標楷體'
+    luckyToExcelFont[1] = '微軟正黑體'
+    luckyToExcelFont[2] = 'Microsoft YaHei'
+    luckyToExcelFont[3] = 'Microsoft YaHei Light'
+    luckyToExcelFont[4] = '細明體'
+    luckyToExcelFont[5] = 'Microsoft YaHei UI'
+    luckyToExcelFont[6] = 'Microsoft YaHei UI Light'
+    luckyToExcelFont[7] = 'Microsoft JhengHei UI'
+    luckyToExcelFont[8] = 'Microsoft JhengHei UI Light'
     luckyToExcelFont[9] = 'Arial'
     luckyToExcelFont[10] = 'Times New Roman'
     luckyToExcelFont[11] = 'Tahoma'
@@ -177,8 +177,8 @@ export class FileDownloadService {
     if (!Array.isArray(luckyBorderInfo)) return;
     luckyBorderInfo.forEach((elem: any) => {
       let border = this.borderConvert(elem.borderType, elem.style, elem.color);
-      let rang = elem.range[0];
-      worksheet.getCell(rang.row_focus + 1, rang.column_focus + 1).border = border;
+      let rang = elem.value;
+      worksheet.getCell(rang.row_index + 1, rang.col_index + 1).border = border;
     })
   }
 

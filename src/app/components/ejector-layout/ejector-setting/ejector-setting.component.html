@@ -1,0 +1,73 @@
+<div class="ejector-setting">
+  <form #f="ngForm" class="ejector-setting__form" (ngSubmit)="onSubmit(f)" >
+    <!-- cell and field -->
+    <div class="ejector-setting__set">
+      <div class="ejector-setting__dropdown">
+          <!-- dropdown menu -->
+          <mat-form-field [style.width.px]=150 appearance="outline">
+            <mat-label>Select Section</mat-label>
+            <mat-select data-testid="eject-section-dropdown" name="selectedSection" ngModel required>
+              <mat-option data-testid="eject-section-value" *ngFor="let ejectSection of ejectSections" [value]="ejectSection">
+                {{ ejectSection }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field [style.width.px]=150 appearance="outline">
+            <mat-label>Select Param</mat-label>
+            <mat-select data-testid="eject-param-dropdown" name="selectedParam" ngModel required>
+              <mat-option data-testid="eject-param-value" *ngFor="let ejectParam of ejectParams" [value]="ejectParam">
+                {{ ejectParam }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div>
+      <div class="ejector-setting__field">
+        <mat-form-field [style.width.px]=150 appearance="fill">
+          <mat-label>Cell Position</mat-label>
+          <input #cell data-testid="eject-cell-position-input" matInput placeholder="Ex. A1" name="selectedCell" ngModel required>
+        </mat-form-field>
+      </div>     
+      <div class="ejector-setting__save">
+        <input id="saveBinding" type="submit">
+        <label data-testid="eject-save-btn" class="ejector-setting__save__label" for="saveBinding" (click)="clearField(); validateForm(f);">Save Binding</label>
+      </div>
+    </div>
+  </form>
+  <div class="ejector-setting__expansion-panel">
+    <mat-expansion-panel data-testid="eject-expansion" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Bonded Fields
+        </mat-panel-title>
+        <mat-panel-description>
+          Table of bonded fields
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p *ngIf="ejectorForms.length === 0">Currently, no Excel cells get bonded</p>
+      <table #table class="ejector-setting__table" mat-table *ngIf="ejectorForms.length !== 0" [dataSource]="ejectorForms">
+        <ng-container matColumnDef="section">
+          <th mat-header-cell *matHeaderCellDef> Section </th>
+          <td data-testid="eject-table-section" mat-cell *matCellDef="let pairForm"> {{ pairForm.section }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="label">
+          <th mat-header-cell *matHeaderCellDef> Label </th>
+          <td data-testid="eject-table-label" mat-cell *matCellDef="let pairForm"> {{ pairForm.label }} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="cell">
+          <th mat-header-cell *matHeaderCellDef> Cell </th>
+          <td data-testid="eject-table-cell" mat-cell *matCellDef="let pairForm"> {{ pairForm.cell }} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef> Value </th>
+          <td mat-cell *matCellDef="let pairForm"> {{ pairForm.value }} </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row data-testid="eject-table-row" *matRowDef="let row; columns: displayedColumns;" (click)="deleteRow(row)"></tr>
+      </table>
+    </mat-expansion-panel>
+  </div>
+</div>

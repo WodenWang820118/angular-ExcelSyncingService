@@ -1,0 +1,48 @@
+@import "src/app/app.component.scss";
+
+.panel {
+  width:900px;
+  
+  &__tools {
+    display: flex;
+    align-items: center;
+  }
+
+  &__upload {
+    display: block;
+    margin-right: 20px;
+
+    input[type=file] {
+      display: none;
+    }
+    
+    &__label {
+      @include matInput-label;
+    }
+
+    // might use the hovering effect
+    // &__label:hover {
+    //   background: #c7c7c7;
+    //   border-color: #b1b1b1;
+    //   color: #fff;
+    // }
+    
+    // &__label:active {
+    //   background: #808080;
+    // }
+  }
+
+  &__sync {
+    margin-right: 20px;
+  }
+}
+
+#luckysheet {
+  display: inline-block;
+  position: relative;
+  // must specify the height and width
+  width:850px;
+  height: 800px;
+  margin: 2% 0;
+  padding: 0px;
+}

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ValueSyncService } from 'src/app/service/valueSync.service';
+import { PairFormSyncService } from '../../../service/PairFormService/PairFormSync.service';
 
 @Component({
   selector: 'app-forms',
@@ -14,7 +14,7 @@ export class FormsComponent {
   maxPressure: FormControl;
   customForm: FormGroup;
 
-  constructor(private vsService: ValueSyncService) {
+  constructor(private pfSyncService: PairFormSyncService) {
     this.maxFillingTime = new FormControl(0);
     this.maxPackingTime = new FormControl(0);
     this.maxPressure = new FormControl(0);
@@ -27,23 +27,23 @@ export class FormsComponent {
     });
 
     // retrieve the pairForms from the server at the first time
-    this.vsService.getPairFormsFromServer().subscribe(pairForms => {
-      this.vsService.syncForms(pairForms, this.customForm);
+    this.pfSyncService.pairFormApiService.getPairFormsFromServer().subscribe(pairForms => {
+      this.pfSyncService.syncForms(pairForms, this.customForm);
     })
 
     // subscribe to the changes of the forms subject
-    this.vsService.getPairFormsSubject().subscribe(pairForms => {
-      this.vsService.syncForms(pairForms, this.customForm);
+    this.pfSyncService.getPairFormsSubject().subscribe(pairForms => {
+      this.pfSyncService.syncForms(pairForms, this.customForm);
     })
   }
 
   // save the forms to the server
   saveForms(): void {
-    let forms = this.vsService.getPairForms();
+    let forms = this.pfSyncService.getPairForms();
     forms.forEach(form => {
-      form.value = Number(this.vsService.getControlValue(this.customForm, form.label));
+      form.value = Number(this.pfSyncService.getControlValue(this.customForm, form.label));
     })
 
-    this.vsService.setUpdatePairForms(forms);
+    this.pfSyncService.setUpdatePairForms(forms);
   }
 }

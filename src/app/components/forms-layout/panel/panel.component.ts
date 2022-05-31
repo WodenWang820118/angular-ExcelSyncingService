@@ -1,11 +1,11 @@
-import { FileDownloadService } from '../../service/fileDownload.service';
 import { Component } from '@angular/core';
 
 import * as luckysheet from 'luckysheet';
 
 import { PairForm } from 'src/app/interface/pairForm';
-import { ValueSyncService } from 'src/app/service/valueSync.service';
-import { FileUploadService } from 'src/app/service/fileUpload.service';
+import { ExcelFileUploadService } from '../../../utilities/ExcelFileUpload.service';
+import { ExcelFileDownloadService } from '../../../utilities/ExcelFileDownload.service';
+import { PairFormSyncService } from '../../../service/PairFormService/PairFormSync.service';
 
 @Component({
   selector: 'app-panel',
@@ -15,9 +15,9 @@ import { FileUploadService } from 'src/app/service/fileUpload.service';
 export class PanelComponent {
 
   pairForms: PairForm[] = [];
-  constructor(private vsService: ValueSyncService,
-              private fileDownloadService: FileDownloadService,
-              private fileUploadService: FileUploadService) { 
+  constructor(private pfSyncService: PairFormSyncService,
+              private fileDownloadService: ExcelFileDownloadService,
+              private fileUploadService: ExcelFileUploadService) { 
   }
 
   ngOnInit(): void {
@@ -29,15 +29,15 @@ export class PanelComponent {
 
     setTimeout(() => {
       // retrieve the pairForms from the server at the first time
-      this.vsService.getPairFormsFromServer().subscribe(pairForms => {
+      this.pfSyncService.pairFormApiService.getPairFormsFromServer().subscribe(pairForms => {
         this.pairForms = pairForms;
-        this.vsService.syncLuckySheet(this.pairForms, luckysheet, "Sheet1");
+        this.pfSyncService.syncLuckySheet(this.pairForms, luckysheet, "Sheet1");
       })
   
       // subscribe to the changes of the pairForms subject
-      this.vsService.getPairFormsSubject().subscribe(pairForms => {
+      this.pfSyncService.getPairFormsSubject().subscribe(pairForms => {
         this.pairForms = pairForms;
-        this.vsService.syncLuckySheet(this.pairForms, luckysheet, "Sheet1");
+        this.pfSyncService.syncLuckySheet(this.pairForms, luckysheet, "Sheet1");
       })
     }, 1000);
   }
@@ -64,7 +64,7 @@ export class PanelComponent {
     const sheet = luckysheet.getSheet("Sheet1");
 
     for (let p of this.pairForms) {
-      if (this.vsService.getFields().includes(p.label)) {
+      if (this.pfSyncService.getFields().includes(p.label)) {
 
         let x: number = p.coordinate.x;
         let y: number = p.coordinate.y;
@@ -78,7 +78,7 @@ export class PanelComponent {
     }
     console.log(`Successfully update all the form values`);
     // send the pairForms to the valueSyncService
-    this.vsService.setUpdatePairForms(this.pairForms);
+    this.pfSyncService.setUpdatePairForms(this.pairForms);
   }
 
   downloadExcel(): void {

@@ -16,14 +16,13 @@ Specifically, after cell binding, it can:
 - [LuckyExcel](https://www.npmjs.com/package/luckyexcel) - upload Excel
 - [Exceljs](https://www.npmjs.com/package/exceljs?source=post_page-----b670f32d5c2a----------------------) - convert luckysheet to Excel file
 - [file-saver](https://www.npmjs.com/package/file-saver) - allow the client side to download the edited Excel file
+- [uuid](https://www.npmjs.com/package/uuid) - generate unique id even for different types of forms
 
 ## Plan
 - debug
-    - uploaded Excel's data doesn't get into the luckysheet array -> should
-    - downloaded Excel cannot be re-uploaded -> should
-    - can sync data without binding -> shouldn't
-- artifacts, including
-    - design sequence diagram
+    - downloaded Excel styling problem (in progress)
+- testing
+    - Cypress end-to-end testing to ensure consistent behaviors (in progress)
 
 
 ## Angular CLI version
@@ -36,4 +35,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## Json-server
 
-The mock server uses the `label` as unique ids, use `json-server db.json --id label` to set `label` as id field.
+The mock server uses the uuid `id` as unique ids, use `json-server db.json --id id` to set `id` as id field.
+
+## Software Architecture
+Please see software artifacts to understand how it is designed. The design used the SOA (service-oriented architecture) to reduce the potential duplicate code.

@@ -1,9 +1,20 @@
-<div class="layout">
-  <div>
-    <app-panel></app-panel>
+<div class="mainpage">
+  <div class="mainpage__template">
+    <label id="mainpage__template__label">Pick a template</label>
+    <mat-radio-group
+      class="mainpage__template__group"
+      aria-label="mainpage__template__label"
+      [(ngModel)]="selectedTemplate"
+      >
+      <mat-radio-button
+        class="mainpage__template__radio-button"
+        *ngFor="let template of templates"
+        [value]="template"
+        (change)="onTemplateChange(template)"
+        >
+        {{ template }}
+      </mat-radio-button>
+    </mat-radio-group>
   </div>
-  <div class="layout__functions">
-    <app-setting></app-setting>
-    <app-forms></app-forms>
-  </div>
+  <router-outlet></router-outlet>
 </div>
