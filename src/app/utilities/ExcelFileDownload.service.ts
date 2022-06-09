@@ -125,11 +125,11 @@ export class ExcelFileDownloadService {
     horizontal['default'] = 'left'
 
     // type declaration: text-wrap
-    const textWrap: { [key: number | string]: boolean } = {}
-    textWrap[0] = false
-    textWrap[1] = false
-    textWrap[2] = true
-    textWrap['default'] = false
+    const wrapText: { [key: number | string]: boolean } = {}
+    wrapText[0] = false
+    wrapText[1] = false
+    wrapText[2] = true
+    wrapText['default'] = false
 
     // type declaration: text-rotation
     const textRotation: { [key: number | string]: number | string } = {}
@@ -144,7 +144,7 @@ export class ExcelFileDownloadService {
     const luckyToExcelAlignment = {
       vertical: vertical,
       horizontal: horizontal,
-      wrapText: textWrap,
+      wrapText: wrapText,
       textRotation: textRotation
     }
 
@@ -192,6 +192,7 @@ export class ExcelFileDownloadService {
     type['border-left'] = 'left';
     type['border-right'] = 'right';
     type['border-top'] = 'top';
+    type['border-bottom'] = 'bottom';
 
     // typescript declaration: style
     const style: { [key: number]: string } = {}
@@ -206,8 +207,9 @@ export class ExcelFileDownloadService {
     style[8] = 'medium';
     style[9] = 'mediumDashed';
     style[10] = 'mediumDashDot';
-    style[11] = 'slantDashDot';
-    style[12] = 'thick';
+    style[11] = 'mediumDashDotDot';
+    style[12] = 'slantDashDot';
+    style[13] = 'thick';
 
     const luckyToExcel = {
       type: type,
@@ -224,13 +226,13 @@ export class ExcelFileDownloadService {
     // typescript declaration: border
     const border: { [key: string]: {style: string, color: any} } = {}
 
-    if (luckyToExcel.type[borderType] === 'all') {
+    if (type[borderType] === 'all') {
       border['top'] = template;
       border['right'] = template;
       border['bottom'] = template;
       border['left'] = template;
     } else {
-      border[luckyToExcel.type[borderType]] = template;
+      border[type[borderType]] = template;
     }
     return border;
   }
